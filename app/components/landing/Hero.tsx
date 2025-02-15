@@ -1,6 +1,7 @@
-import { ArrowRight, Code } from 'phosphor-react';
-import { Link } from '@remix-run/react';
+import { Code } from 'phosphor-react';
 import { motion } from 'framer-motion';
+import { PrimaryButton } from '../ui/PrimaryButton';
+import { SecondaryButton } from '../ui/SecondaryButton';
 
 export const Hero = () => {
   return (
@@ -62,27 +63,8 @@ export const Hero = () => {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-12"
             >
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Link
-                  to="/projects"
-                  className="group flex items-center gap-2 px-6 py-3 bg-violet-500 text-white rounded-full font-medium hover:bg-violet-600 transition-all duration-300"
-                >
-                  View Projects
-                  <ArrowRight 
-                    weight="bold"
-                    className="w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-1" 
-                  />
-                </Link>
-              </motion.div>
-
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Link
-                  to="/contact"
-                  className="group flex items-center gap-2 px-6 py-3 border border-gray-800 hover:border-violet-500 rounded-full font-medium text-gray-300 hover:text-violet-400 transition-all duration-300"
-                >
-                  Contact
-                </Link>
-              </motion.div>
+              <PrimaryButton to="/projects">View Projects</PrimaryButton>
+              <SecondaryButton to="/contact">Contact</SecondaryButton>
             </motion.div>
 
             <motion.div 
