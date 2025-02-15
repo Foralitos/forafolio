@@ -4,6 +4,7 @@ import { Hero } from "~/components/landing/Hero";
 import { About } from "~/components/landing/About";
 import { Projects } from "~/components/landing/Projects";
 import { Contact } from "~/components/landing/Contact";
+import { Footer } from "~/components/common/Footer";
 export const meta: MetaFunction = () => {
   return [
     { title: "Fora" },
@@ -19,6 +20,7 @@ export default function Index() {
    <About />
    <Projects />
    <Contact />
+   <Footer />
    </>
   );
 }
