@@ -41,7 +41,7 @@ const projects = [
 
 export const Projects = () => {
   return (
-    <section className="relative py-24 bg-gray-950 overflow-hidden">
+    <section id="projects" className="relative py-24 bg-gray-950 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900/50 to-gray-950 -z-10" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.08)_0%,rgba(99,102,241,0)_100%)]" />
