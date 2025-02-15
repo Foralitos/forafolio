@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from '@remix-run/react';
 import { List, X } from 'phosphor-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -49,12 +48,25 @@ const mobileItemVariants = {
 export const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
+  const [activeSection, setActiveSection] = useState('');
 
   useEffect(() => {
     const handleScroll = () => {
       const isScrolled = window.scrollY > 20;
       setScrolled(isScrolled);
+
+      // Update active section based on scroll position
+      const sections = ['home', 'about', 'projects', 'contact'];
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -69,14 +81,28 @@ export const Navbar = () => {
     }
   }, [mobileMenuOpen]);
 
+  const handleNavClick = (href: string) => {
+    const element = document.getElementById(href.replace('#', ''));
+    if (element) {
+      const yOffset = -80; // Adjust this value based on your navbar height
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+      });
+    }
+    setMobileMenuOpen(false);
+  };
+
   const navItems: NavItem[] = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-    { name: 'Projects', href: '/projects' },
-    { name: 'Contact', href: '/contact' },
+    { name: 'Home', href: '#home' },
+    { name: 'About', href: '#about' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Contact', href: '#contact' },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (href: string) => activeSection === href.replace('#', '');
 
   return (
     <motion.nav
@@ -86,7 +112,7 @@ export const Navbar = () => {
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled
           ? 'bg-gray-950/80 backdrop-blur-md shadow-lg'
-          : 'bg-transparent'
+          : 'bg-gray-950/80'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -97,14 +123,14 @@ export const Navbar = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <Link
-              to="/"
+            <button
+              onClick={() => handleNavClick('#home')}
               className="flex items-center space-x-2 text-xl font-bold tracking-tighter hover:text-violet-600 transition-colors z-50"
             >
               <span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
                 Fora
               </span>
-            </Link>
+            </button>
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -117,8 +143,8 @@ export const Navbar = () => {
                 animate="visible"
                 variants={navItemVariants}
               >
-                <Link
-                  to={item.href}
+                <button
+                  onClick={() => handleNavClick(item.href)}
                   className={`text-sm font-medium transition-colors duration-200 relative group
                     ${
                       isActive(item.href)
@@ -134,7 +160,7 @@ export const Navbar = () => {
                     `}
                     layoutId="underline"
                   />
-                </Link>
+                </button>
               </motion.div>
             ))}
           </div>
@@ -181,7 +207,7 @@ export const Navbar = () => {
             onKeyDown={(e) => {
               if (e.key === 'Escape') setMobileMenuOpen(false);
             }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-lg md:hidden"
+            className="fixed inset-0 bg-black/60 backdrop-blur-lg md:hidden z-40"
             onClick={() => setMobileMenuOpen(false)}
           />
         )}
@@ -195,7 +221,8 @@ export const Navbar = () => {
             initial="closed"
             animate="open"
             exit="closed"
-            className="fixed inset-y-0 right-0 w-full bg-gray-950 md:hidden"
+            className="fixed inset-y-0 right-0 w-full bg-gray-950 md:hidden z-50"
+            style={{ backgroundColor: 'rgb(3 7 18)' }}
           >
             <div className="flex flex-col h-full pt-20 pb-6 px-6">
               <div className="flex-1 flex flex-col justify-center space-y-8">
@@ -206,10 +233,9 @@ export const Navbar = () => {
                     custom={index}
                     className="overflow-hidden"
                   >
-                    <Link
-                      to={item.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={`group relative overflow-hidden text-3xl font-medium transition-colors duration-300 ease-out
+                    <button
+                      onClick={() => handleNavClick(item.href)}
+                      className={`group relative overflow-hidden text-3xl font-medium transition-colors duration-300 ease-out w-full text-left
                         ${
                           isActive(item.href)
                             ? 'text-violet-400'
@@ -230,7 +256,7 @@ export const Navbar = () => {
                         whileHover={{ scaleX: 1 }}
                         transition={{ duration: 0.3 }}
                       />
-                    </Link>
+                    </button>
                   </motion.div>
                 ))}
               </div>
@@ -242,7 +268,7 @@ export const Navbar = () => {
                 className="pt-8 border-t border-gray-800"
               >
                 <p className="text-sm text-gray-400">
-                  © 2025 Fora. All rights reserved.
+                  © {new Date().getFullYear()} Fora. All rights reserved.
                 </p>
               </motion.div>
             </div>

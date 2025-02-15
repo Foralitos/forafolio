@@ -6,6 +6,7 @@ import { SecondaryButton } from '../ui/SecondaryButton';
 export const Hero = () => {
   return (
     <motion.section 
+      id="home"
       initial={{ opacity: 0 }} 
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
