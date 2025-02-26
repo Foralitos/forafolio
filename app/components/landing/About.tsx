@@ -2,16 +2,16 @@ import { motion } from 'framer-motion';
 import { Star } from 'phosphor-react';
 
 const experiences = [
-  {
-    year: '2022',
-    title: 'Etherfuse Hackathon',
-    challenge: 'My First Blockchain Hackathon',
-    description: 'I participated in my first hackathon developing an application that allowed storing and displaying legal documentation through QR codes using blockchain technology. Although we didn\'t win, the experience was invaluable.',
-    impact: 'This hackathon opened the doors to the blockchain world and taught me the importance of working under pressure and as a team.',
-    image: '/about/experience1.jpg',
-    alt: 'Etherfuse Hackathon',
-    technologies: ['Blockchain', 'React', 'Web3.js']
-  },
+  // {
+  //   year: '2022',
+  //   title: 'Etherfuse Hackathon',
+  //   challenge: 'My First Blockchain Hackathon',
+  //   description: 'I participated in my first hackathon developing an application that allowed storing and displaying legal documentation through QR codes using blockchain technology. Although we didn\'t win, the experience was invaluable.',
+  //   impact: 'This hackathon opened the doors to the blockchain world and taught me the importance of working under pressure and as a team.',
+  //   image: '/about/experience1.jpg',
+  //   alt: 'Etherfuse Hackathon',
+  //   technologies: ['Blockchain', 'React', 'Web3.js']
+  // },
   {
     year: '2024',
     title: 'Escuelita Maker',
