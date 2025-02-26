@@ -10,7 +10,7 @@ const projects = [
     liveUrl: 'https://planeadito.com',
   },
   {
-    title: 'Talk to Santa',
+    title: 'Hablar con Santa',
     description: 'Santa Claus calling service that brought joy to hundreds of children during the holiday season.',
     image: '/projects/santa-mockup.png',
     tags: ['Next.js', 'Node.js', 'Bland'],

@@ -17,11 +17,11 @@ export const Contact = () => {
           className="bg-gray-900/80 border border-gray-800 rounded-2xl p-8 backdrop-blur-sm shadow-xl"
         >
           <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 text-center">
-            Contáctame<span className="text-violet-400">.</span>
+            Contact Me<span className="text-violet-400">.</span>
           </h2>
           
           <p className="text-gray-300 text-lg mb-8 text-center">
-            Puedes contactarme por correo electrónico o por mis redes sociales.{' '}
+            You can reach me via email or through my social media.{' '}
             <a 
               href="https://linkedin.com/in/angel-delgado-dev" 
               target="_blank" 
@@ -30,7 +30,7 @@ export const Contact = () => {
             >
               LinkedIn
             </a>
-            {' '}o{' '}
+            {' '}or{' '}
             <a 
               href="https://x.com/ElforaDev" 
               target="_blank" 
@@ -39,7 +39,7 @@ export const Contact = () => {
             >
               Twitter
             </a>
-            {' '}si quieres conectar.
+            {' '}if you&apos;d like to connect.
           </p>
 
           {/* Email Container */}
@@ -76,7 +76,7 @@ export const Contact = () => {
               whileTap={{ y: 0 }}
             >
               <Calendar className="w-5 h-5" />
-              Agendar Llamada
+              Schedule a Call
             </motion.a>
           </motion.div>
         </motion.div>
