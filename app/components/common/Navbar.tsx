@@ -111,8 +111,8 @@ export const Navbar = () => {
       transition={{ duration: 0.5, ease: "easeOut" }}
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-gray-950/80 backdrop-blur-md shadow-lg'
-          : 'bg-gray-950/80'
+          ? 'md:bg-gray-950/80 md:backdrop-blur-md md:shadow-lg bg-gray-950 shadow-lg'
+          : 'md:bg-gray-950/80 bg-gray-950'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -222,8 +222,21 @@ export const Navbar = () => {
             animate="open"
             exit="closed"
             className="fixed inset-y-0 right-0 w-full bg-gray-950 md:hidden z-50"
-            style={{ backgroundColor: 'rgb(3 7 18)' }}
+            style={{ backgroundColor: '#030712' }}
+            onClick={(e) => e.stopPropagation()}
           >
+            {/* Close button for mobile menu */}
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="absolute top-6 right-6 p-2 rounded-full bg-gray-800 text-gray-200 hover:text-violet-400 transition-colors"
+              aria-label="Close menu"
+            >
+              <X size={24} weight="bold" />
+            </motion.button>
+            
             <div className="flex flex-col h-full pt-20 pb-6 px-6">
               <div className="flex-1 flex flex-col justify-center space-y-8">
                 {navItems.map((item, index) => (

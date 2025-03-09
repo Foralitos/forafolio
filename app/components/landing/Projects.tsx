@@ -36,6 +36,13 @@ const projects = [
     image: '/projects/Luxe-mockup.png',
     tags: ['Next.js', 'Tailwind CSS', 'Framer Motion'],
     liveUrl: 'https://luxe-jewelry.vercel.app',
+  },
+  {
+    title: 'FORAUI',
+    description: 'A comprehensive Tailwind CSS component and animation library offering elegant UI elements with fluid motion effects for modern web applications.',
+    image: '/projects/whiteforaui.png',
+    tags: ['Next.js', 'Tailwind CSS',],
+    liveUrl: 'https://foraui.vercel.app',
   }
 ];
 
@@ -56,10 +63,10 @@ export const Projects = () => {
           className="text-center mb-20"
         >
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Proyectos Destacados
+            Featured Projects
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Una selección de mis mejores proyectos, cada uno representando un desafío único y una solución innovadora.
+            A selection of my best projects, each representing a unique challenge and an innovative solution.
           </p>
         </motion.div>
 
