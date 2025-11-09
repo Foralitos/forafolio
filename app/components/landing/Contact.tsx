@@ -58,7 +58,7 @@ export const Contact = () => {
               <p className={`${textSecondary} text-sm md:text-base mb-8 text-center transition-colors duration-500`}>
                 You can reach me via email or through my social media.{' '}
                 <a
-                  href="https://linkedin.com/in/angel-delgado-dev"
+                  href="https://linkedin.com/in/foradelgado"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`${linkColor} ${linkHoverColor} underline transition-colors duration-200`}
