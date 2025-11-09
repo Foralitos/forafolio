@@ -18,6 +18,7 @@ export default {
         ],
         'neuebit': ['PP Neue Bit', 'monospace'],
         'mondwest': ['PP Mondwest', 'serif'],
+        'pixel': ['"Press Start 2P"', 'monospace'],
       },
       animation: {
         "fade-in": "fade-in 0.5s ease-in-out",

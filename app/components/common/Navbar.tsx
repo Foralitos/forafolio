@@ -13,16 +13,16 @@ const mobileMenuVariants = {
     x: "100%",
     transition: {
       duration: 0.5,
-      ease: "easeInOut",
-      when: "afterChildren"
+      ease: "easeInOut" as const,
+      when: "afterChildren" as const
     }
   },
   open: {
     x: 0,
     transition: {
       duration: 0.5,
-      ease: "easeInOut",
-      when: "beforeChildren",
+      ease: "easeInOut" as const,
+      when: "beforeChildren" as const,
       staggerChildren: 0.1
     }
   }
@@ -166,7 +166,7 @@ export const Navbar = () => {
                   <polyline points="12 6 12 12 16 14" />
                 </svg>
                 <span className="text-sm font-medium text-white/90">{formattedTime}</span>
-                <span className="text-xs font-normal text-white/60">CDMX</span>
+                <span className="text-xs font-normal text-white/60">Mexico City</span>
               </div>
             </motion.div>
           </div>

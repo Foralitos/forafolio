@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useCDMXTime } from '~/hooks/useCDMXTime';
+import { ScrollDownIndicator } from '../common/ScrollDownIndicator';
 
 export const Hero = () => {
   const { isDaytime } = useCDMXTime();
@@ -49,6 +50,9 @@ export const Hero = () => {
           </motion.h2>
         </motion.div>
       </div>
+
+      {/* Scroll Down Indicator */}
+      <ScrollDownIndicator targetSection="#about" />
     </section>
   );
 };
