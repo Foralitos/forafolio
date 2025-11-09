@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  @font-face {
+    font-family: 'PP Neue Bit';
+    src: url('/fonts/ppneuebit-bold.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'PP Mondwest';
+    src: url('/fonts/ppmondwest-regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+}
+
 html,
 body {
   @apply dark:bg-gray-950 overflow-x-hidden;
