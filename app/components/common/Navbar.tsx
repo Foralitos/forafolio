@@ -173,53 +173,68 @@ export const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Navbar */}
-      <motion.nav
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="absolute top-0 w-full z-50 md:hidden bg-gray-950/80 backdrop-blur-md shadow-lg"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <button
-              onClick={() => handleNavClick('#home')}
-              className="flex items-center space-x-2 text-xl font-bold tracking-tighter hover:text-violet-600 transition-colors z-50"
-            >
-              <span className="bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
-                Fora
-              </span>
-            </button>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="rounded-full p-2 inline-flex items-center justify-center text-gray-200 hover:text-violet-400 transition-colors duration-200 z-50"
-              aria-expanded={mobileMenuOpen}
-              aria-label="Toggle menu"
-            >
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={mobileMenuOpen ? "close" : "open"}
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
+      {/* Mobile Navbar - Glassmorphic Style (Compact) */}
+      <div className="absolute top-6 left-0 right-0 z-50 md:hidden pointer-events-none">
+        <div className="flex justify-center px-4">
+          <motion.nav
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="pointer-events-auto"
+          >
+            {/* Glass Container - Compact */}
+            <div className="flex items-center gap-1 px-2 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl">
+              {/* Home Icon */}
+              <button
+                onClick={() => handleNavClick('#home')}
+                className="p-2 rounded-full hover:bg-white/10 transition-all duration-200"
+                aria-label="Home"
+              >
+                <svg
+                  className="w-5 h-5 text-white/90"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  {mobileMenuOpen ? (
-                    <X size={24} weight="bold" />
-                  ) : (
-                    <List size={24} weight="bold" />
-                  )}
-                </motion.div>
-              </AnimatePresence>
-            </button>
-          </div>
-        </div>
-      </motion.nav>
+                  <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+              </button>
 
-      {/* Mobile Menu Overlay */}
+              {/* Divider */}
+              <div className="w-px h-6 bg-white/20" />
+
+              {/* Menu Button - Icon Only */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 rounded-full hover:bg-white/10 transition-all duration-200"
+                aria-expanded={mobileMenuOpen}
+                aria-label="Toggle menu"
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={mobileMenuOpen ? "close" : "open"}
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {mobileMenuOpen ? (
+                      <X size={20} weight="bold" className="text-white/90" />
+                    ) : (
+                      <List size={20} weight="bold" className="text-white/90" />
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+              </button>
+            </div>
+          </motion.nav>
+        </div>
+      </div>
+
+      {/* Mobile Menu Overlay - Glassmorphic */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -227,7 +242,7 @@ export const Navbar = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-lg md:hidden z-40"
+            className="fixed inset-0 bg-black/70 backdrop-blur-xl md:hidden z-40"
             onClick={() => setMobileMenuOpen(false)}
           />
         )}
@@ -241,19 +256,19 @@ export const Navbar = () => {
             initial="closed"
             animate="open"
             exit="closed"
-            className="fixed inset-y-0 right-0 w-full bg-gray-950 md:hidden z-50"
+            className="fixed inset-y-0 right-0 w-full bg-black/80 backdrop-blur-xl md:hidden z-50"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setMobileMenuOpen(false)}
-              className="absolute top-6 right-6 p-2 rounded-full bg-gray-800 text-gray-200 hover:text-violet-400 transition-colors"
+              className="absolute top-6 right-6 p-3 rounded-full bg-white/10 border border-white/20 text-white/90 hover:bg-white/20 transition-colors"
               aria-label="Close menu"
             >
-              <X size={24} weight="bold" />
+              <X size={20} weight="bold" />
             </button>
 
             <div className="flex flex-col h-full pt-20 pb-6 px-6">
-              <div className="flex-1 flex flex-col justify-center space-y-8">
+              <div className="flex-1 flex flex-col justify-center space-y-6">
                 {[{ name: 'Home', href: '#home' }, ...navItems].map((item, index) => (
                   <motion.div
                     key={item.name}
@@ -263,17 +278,24 @@ export const Navbar = () => {
                   >
                     <button
                       onClick={() => handleNavClick(item.href)}
-                      className={`group relative overflow-hidden text-3xl font-medium transition-colors duration-300 ease-out w-full text-left ${
-                        isActive(item.href) ? 'text-violet-400' : 'text-gray-200'
+                      className={`group relative overflow-hidden text-2xl font-medium transition-colors duration-300 ease-out w-full text-left ${
+                        isActive(item.href) ? 'text-white' : 'text-white/70 hover:text-white'
                       }`}
                     >
                       <motion.span
                         className="relative z-10 block"
-                        whileHover={{ x: 20 }}
+                        whileHover={{ x: 10 }}
                         transition={{ duration: 0.3 }}
                       >
                         {item.name}
                       </motion.span>
+                      {isActive(item.href) && (
+                        <motion.div
+                          layoutId="mobile-active-pill"
+                          className="absolute inset-0 bg-white/10 rounded-lg -z-10"
+                          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                        />
+                      )}
                     </button>
                   </motion.div>
                 ))}
@@ -283,9 +305,28 @@ export const Navbar = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="pt-8 border-t border-gray-800"
+                className="space-y-4 pt-6 border-t border-white/10"
               >
-                <p className="text-sm text-gray-400">
+                {/* Clock Display */}
+                <div className="flex items-center gap-2 text-white/70">
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                  <span className="text-sm font-medium text-white/90">{formattedTime}</span>
+                  <span className="text-xs font-normal text-white/60">Mexico City</span>
+                </div>
+
+                {/* Copyright */}
+                <p className="text-sm text-white/50">
                   © {new Date().getFullYear()} Fora. All rights reserved.
                 </p>
               </motion.div>
