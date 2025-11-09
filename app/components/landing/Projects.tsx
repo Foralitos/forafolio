@@ -3,11 +3,18 @@ import { useCDMXTime } from '~/hooks/useCDMXTime';
 
 const projects = [
   {
-    title: 'Planeadito',
-    description: 'Digital catalog connecting suppliers across Mexico with potential customers, facilitating B2B commerce.',
-    image: '/projects/planeadito.png',
-    tags: ['Next.js', 'MongoDB', 'Tailwind CSS'],
-    liveUrl: 'https://planeadito.com',
+    title: 'Furbo',
+    description: 'AI WhatsApp agent for sports predictions and real-time news updates.',
+    image: '/projects/Furbo.png',
+    tags: ['Next.js', 'MongoDB', 'Tailwind CSS', 'OpenAI', 'WhatsApp', 'LangGraph'],
+    liveUrl: 'https://furbo.app',
+  },
+  {
+    title: 'ElAtletico',
+    description: 'Sports newsletter application that uses artificial intelligence to write and research sports match notes.',
+    image: '/projects/atletico.png',
+    tags: ['Next.js', 'Tailwind CSS', 'MongoDB', 'OpenAI', 'N8N'],
+    liveUrl: 'https://elatletico.news/',
   },
   {
     title: 'Hablar con Santa',
@@ -16,27 +23,8 @@ const projects = [
     tags: ['Next.js', 'Node.js', 'Bland'],
     liveUrl: 'https://hablarconsanta.com',
   },
-  {
-    title: 'Predep',
-    description: 'Sports prediction application that uses artificial intelligence to analyze and predict sports event results.',
-    image: '/projects/predep-mockup.png',
-    tags: ['Next.js', 'Tailwind CSS', 'MongoDB'],
-    liveUrl: 'https://predep.vercel.app/',
-  },
-  {
-    title: 'Aura',
-    description: 'Modern and elegant business portfolio design with fluid animations and optimized user experience.',
-    image: '/projects/Aura-mockup.png',
-    tags: ['Next.js', 'Tailwind CSS', 'Framer Motion'],
-    liveUrl: 'https://aura-ui.vercel.app',
-  },
-  {
-    title: 'Luxe',
-    description: 'Elegant and modern design for a jewelry store, with fluid animations and a refined user experience.',
-    image: '/projects/Luxe-mockup.png',
-    tags: ['Next.js', 'Tailwind CSS', 'Framer Motion'],
-    liveUrl: 'https://luxe-jewelry.vercel.app',
-  },
+ 
+ 
   {
     title: 'FORAUI',
     description: 'A comprehensive Tailwind CSS component and animation library offering elegant UI elements with fluid motion effects for modern web applications.',
