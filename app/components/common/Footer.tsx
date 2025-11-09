@@ -1,25 +1,29 @@
 import { motion } from 'framer-motion';
+import { useCDMXTime } from '~/hooks/useCDMXTime';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { isDaytime } = useCDMXTime();
+
+  // Dynamic colors based on CDMX time
+  const bgColor = isDaytime ? 'bg-gray-50' : 'bg-gray-950';
+  const textPrimary = isDaytime ? 'text-gray-900' : 'text-white';
+  const textSecondary = isDaytime ? 'text-gray-600' : 'text-gray-400';
+  const dividerColor = isDaytime ? 'border-gray-900' : 'border-white';
 
   return (
-    <footer className="relative py-16 bg-gray-950 overflow-hidden">
-      {/* Top Divider */}
-      <motion.div 
+    <footer className={`relative py-16 ${bgColor} overflow-hidden transition-colors duration-500`}>
+      {/* Top Divider - Pixel Art Style */}
+      <motion.div
         initial={{ opacity: 0, scaleX: 0 }}
         whileInView={{ opacity: 1, scaleX: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
-        className="border-t border-gray-800 mb-16"
+        className={`border-t-4 ${dividerColor} mb-16 transition-colors duration-500`}
       />
 
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900/50 to-gray-950 -z-10" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.08)_0%,rgba(99,102,241,0)_100%)]" />
-      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -27,38 +31,40 @@ export const Footer = () => {
           className="flex flex-col items-center gap-8"
         >
           {/* Brand Section */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-center space-y-4"
           >
-            <h3 className="text-2xl font-bold text-white">Fora<span className="text-violet-400">.</span></h3>
-            <p className="text-gray-400 text-sm leading-relaxed max-w-md">
+            <h3 className={`text-2xl md:text-3xl font-neuebit ${textPrimary} tracking-wider transition-colors duration-500`}>
+              FORA
+            </h3>
+            <p className={`${textSecondary} text-sm md:text-base leading-relaxed max-w-md font-neuebit transition-colors duration-500`}>
               Creating unique and memorable digital experiences that transform ideas into reality.
             </p>
           </motion.div>
         </motion.div>
 
-        {/* Divider */}
-        <motion.div 
+        {/* Divider - Pixel Art Style */}
+        <motion.div
           initial={{ opacity: 0, scaleX: 0 }}
           whileInView={{ opacity: 1, scaleX: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.3 }}
-          className="border-t border-gray-800 my-8"
+          className={`border-t-2 ${dividerColor} my-8 transition-colors duration-500`}
         />
 
         {/* Copyright */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-center text-gray-400 text-sm"
+          className={`text-center ${textSecondary} text-sm font-neuebit transition-colors duration-500`}
         >
-          <p>&copy; {currentYear} Fora. All rights reserved.</p>
+          <p>&copy; {currentYear} FORA. ALL RIGHTS RESERVED.</p>
         </motion.div>
       </div>
     </footer>

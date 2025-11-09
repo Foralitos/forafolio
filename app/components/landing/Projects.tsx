@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowUpRight } from 'phosphor-react';
+import { useCDMXTime } from '~/hooks/useCDMXTime';
 
 const projects = [
   {
@@ -47,100 +47,131 @@ const projects = [
 ];
 
 export const Projects = () => {
+  const { isDaytime } = useCDMXTime();
+
+  // Dynamic colors based on time
+  const bgColor = isDaytime ? 'bg-gray-50' : 'bg-gray-950';
+  const textPrimary = isDaytime ? 'text-gray-900' : 'text-white';
+  const textSecondary = isDaytime ? 'text-gray-600' : 'text-gray-400';
+  const cardBg = isDaytime ? 'bg-white/95' : 'bg-gray-900/95';
+  const cardBorder = isDaytime ? 'border-gray-900' : 'border-white';
+  const innerBorder = isDaytime ? 'border-gray-300' : 'border-gray-700';
+  const imageBorder = isDaytime ? 'border-gray-900' : 'border-white';
+  const tagBorder = isDaytime ? 'border-gray-300' : 'border-gray-600';
+  const tagBg = isDaytime ? 'bg-gray-100/50' : 'bg-gray-800/50';
+  const tagText = isDaytime ? 'text-gray-700' : 'text-gray-300';
+  const buttonBorder = isDaytime ? 'border-gray-900' : 'border-white';
+  const buttonBg = isDaytime ? 'bg-gray-900/10' : 'bg-white/10';
+  const buttonHoverBg = isDaytime ? 'hover:bg-gray-900' : 'hover:bg-white';
+  const buttonHoverText = isDaytime ? 'hover:text-white' : 'hover:text-gray-900';
+  const glowColor = isDaytime ? 'bg-gray-900/20' : 'bg-white/20';
+  const cornerColor = isDaytime ? 'bg-gray-900' : 'bg-white';
+
   return (
-    <section id="projects" className="relative py-24 bg-gray-950 overflow-hidden">
+    <section id="projects" className={`relative py-24 ${bgColor} overflow-hidden transition-colors duration-500`}>
       {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900/50 to-gray-950 -z-10" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.08)_0%,rgba(99,102,241,0)_100%)]" />
-      
+      <div className={`absolute inset-0 ${isDaytime ? 'bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100' : 'bg-gradient-to-br from-gray-950 via-gray-900/50 to-gray-950'} -z-10 transition-colors duration-500`} />
+      <div className={`absolute inset-0 ${isDaytime ? 'bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.05)_0%,rgba(99,102,241,0)_100%)]' : 'bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.08)_0%,rgba(99,102,241,0)_100%)]'} transition-opacity duration-500`} />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <motion.div 
+        {/* Section Header - Pixel Art Style */}
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-20"
+          className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Featured Projects
+          <h2 className={`font-pixel text-2xl md:text-3xl ${textPrimary} mb-6 tracking-wider transition-colors duration-500`}>
+            MY PROJECTS
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">
+          <div className={`w-full max-w-md mx-auto h-1 ${isDaytime ? 'bg-gray-900' : 'bg-white'} mb-6 transition-colors duration-500`} />
+          <p className={`${textSecondary} max-w-2xl mx-auto text-sm md:text-base transition-colors duration-500`}>
             A selection of my best projects, each representing a unique challenge and an innovative solution.
           </p>
         </motion.div>
 
-        {/* Projects Grid */}
+        {/* Projects Grid - Pixel Art Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
-            <motion.a
+            <motion.div
               key={index}
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative block h-full"
+              className="group relative h-full"
             >
-              {/* Project Card */}
+              {/* Pixel Art Card */}
               <motion.div
-                whileHover={{ y: -5 }}
+                whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.2 }}
-                className="relative h-full bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl overflow-hidden border border-gray-800 flex flex-col"
+                className="relative h-full"
               >
-                {/* Image Container */}
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.4 }}
-                    className="w-full h-full"
-                  >
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-500"
-                    />
-                  </motion.div>
-                </div>
+                {/* Card with pixel art borders */}
+                <div className={`relative ${cardBg} backdrop-blur-sm border-4 ${cardBorder} shadow-2xl h-full transition-colors duration-500`}>
+                  {/* Inner border */}
+                  <div className={`border-2 ${innerBorder} p-4 md:p-6 h-full flex flex-col transition-colors duration-500`}>
+                    {/* Image Container */}
+                    <div className={`relative aspect-[4/3] border-2 ${imageBorder} mb-4 overflow-hidden ${isDaytime ? 'bg-gray-100' : 'bg-gray-800'} transition-colors duration-500`}>
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover"
+                        style={{ imageRendering: 'pixelated' }}
+                      />
+                    </div>
 
-                {/* Content */}
-                <div className="relative p-6 flex flex-col flex-grow">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-xl font-bold text-white group-hover:text-violet-400 transition-colors">
-                      {project.title}
+                    {/* Title */}
+                    <h3 className={`font-pixel ${textPrimary} text-sm md:text-base mb-3 tracking-wide transition-colors duration-500`}>
+                      {project.title.toUpperCase()}
                     </h3>
-                    <motion.div
-                      whileHover={{ scale: 1.1 }}
-                      transition={{ duration: 0.2 }}
-                      className="text-violet-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      <ArrowUpRight weight="bold" className="w-5 h-5" />
-                    </motion.div>
-                  </div>
-                  
-                  <p className="text-gray-400 text-sm leading-relaxed flex-grow">
-                    {project.description}
-                  </p>
 
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mt-6">
-                    {project.tags.map((tag, tagIndex) => (
-                      <span
-                        key={tagIndex}
-                        className="px-3 py-1 bg-gray-800/50 rounded-full text-gray-300 text-sm"
+                    {/* Description */}
+                    <p className={`${textSecondary} text-xs md:text-sm leading-relaxed mb-4 flex-grow transition-colors duration-500`}>
+                      {project.description}
+                    </p>
+
+                    {/* Tags - Retro Style */}
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.tags.map((tag, tagIndex) => (
+                        <span
+                          key={tagIndex}
+                          className={`px-2 py-1 border-2 ${tagBorder} ${tagBg} ${tagText} text-xs font-mono transition-colors duration-500`}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* CTA Button - Arcade Style */}
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full"
+                    >
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className={`border-2 ${buttonBorder} ${buttonBg} ${buttonHoverBg} ${buttonHoverText} ${textPrimary} text-center py-2 transition-colors duration-200`}
                       >
-                        {tag}
-                      </span>
-                    ))}
+                        <span className="font-pixel text-xs md:text-sm">▶ VIEW PROJECT</span>
+                      </motion.div>
+                    </a>
                   </div>
                 </div>
 
-                {/* Hover Glow Effect */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-violet-600/0 via-violet-600/20 to-violet-600/0 rounded-2xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500 -z-10" />
+                {/* Corner decorations */}
+                <div className={`absolute -top-1 -left-1 w-4 h-4 ${cornerColor} transition-colors duration-500`} />
+                <div className={`absolute -top-1 -right-1 w-4 h-4 ${cornerColor} transition-colors duration-500`} />
+                <div className={`absolute -bottom-1 -left-1 w-4 h-4 ${cornerColor} transition-colors duration-500`} />
+                <div className={`absolute -bottom-1 -right-1 w-4 h-4 ${cornerColor} transition-colors duration-500`} />
+
+                {/* Pixel glow effect on hover */}
+                <div className={`absolute -inset-2 ${glowColor} opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300 -z-10`} />
               </motion.div>
-            </motion.a>
+            </motion.div>
           ))}
         </div>
       </div>
