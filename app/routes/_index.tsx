@@ -17,8 +17,16 @@ export const meta: MetaFunction = () => {
 };
 
 export async function loader() {
-  const projects = await getPublishedProjects();
-  return json({ projects });
+  // El landing es público y estático salvo la grilla de proyectos. Si la DB
+  // está caída no debemos tumbar toda la página: degradamos a [] y dejamos que
+  // Hero/About/Contact rendericen igual.
+  try {
+    const projects = await getPublishedProjects();
+    return json({ projects });
+  } catch (err) {
+    console.error("[_index] No se pudieron cargar proyectos:", err);
+    return json({ projects: [] });
+  }
 }
 
 export default function Index() {
