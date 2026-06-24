@@ -1,0 +1,20 @@
+{
+  "pkg": "forafolio",
+  "globalName": "Forafolio",
+  "projectId": "5bce2c3c-a81a-4ed1-922a-54c2add5c3d3",
+  "shape": "package",
+  "buildCmd": "bash .design-sync/build-css.sh",
+  "srcDir": "app/components",
+  "tsconfig": "tsconfig.json",
+  "cssEntry": ".design-sync/_compiled.css",
+  "readmeHeader": ".design-sync/conventions.md",
+  "extraFonts": [
+    "public/fonts/ppneuebit-bold.otf",
+    "public/fonts/ppmondwest-regular.otf"
+  ],
+  "runtimeFontPrefixes": ["Press Start 2P"],
+  "overrides": {
+    "NPCDialogBox": { "cardMode": "column" },
+    "ScrollDownIndicator": { "cardMode": "single", "primaryStory": "Default" }
+  }
+}
