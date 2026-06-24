@@ -1,40 +1,20 @@
 import { motion } from 'framer-motion';
 import { useCDMXTime } from '~/hooks/useCDMXTime';
 
-const projects = [
-  {
-    title: 'Furbo',
-    description: 'AI WhatsApp agent for sports predictions and real-time news updates.',
-    image: '/projects/Furbo.png',
-    tags: ['Next.js', 'MongoDB', 'Tailwind CSS', 'OpenAI', 'WhatsApp', 'LangGraph'],
-    liveUrl: 'https://furbo.app',
-  },
-  {
-    title: 'ElAtletico',
-    description: 'Sports newsletter application that uses artificial intelligence to write and research sports match notes.',
-    image: '/projects/atletico.png',
-    tags: ['Next.js', 'Tailwind CSS', 'MongoDB', 'OpenAI', 'N8N'],
-    liveUrl: 'https://elatletico.news/',
-  },
-  {
-    title: 'Hablar con Santa',
-    description: 'Santa Claus calling service that brought joy to hundreds of children during the holiday season.',
-    image: '/projects/santa-mockup.png',
-    tags: ['Next.js', 'Node.js', 'Bland'],
-    liveUrl: 'https://hablarconsanta.com',
-  },
- 
- 
-  {
-    title: 'FORAUI',
-    description: 'A comprehensive Tailwind CSS component and animation library offering elegant UI elements with fluid motion effects for modern web applications.',
-    image: '/projects/whiteforaui.png',
-    tags: ['Next.js', 'Tailwind CSS',],
-    liveUrl: 'https://foraui.vercel.app',
-  }
-];
+export interface ProjectItem {
+  id?: string;
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  liveUrl: string;
+}
 
-export const Projects = () => {
+interface ProjectsProps {
+  projects: ProjectItem[];
+}
+
+export const Projects = ({ projects }: ProjectsProps) => {
   const { isDaytime } = useCDMXTime();
 
   // Dynamic colors based on time
