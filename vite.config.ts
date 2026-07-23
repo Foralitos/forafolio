@@ -13,6 +13,26 @@ export default defineConfig({
   server: {
     port: 3000,
   },
+  ssr: {
+    // sanitize-html es CJS y hace require() de htmlparser2 v12 (ESM-only);
+    // el runtime de Vercel no soporta require(esm), así que bundleamos toda
+    // la cadena en el server bundle con las versiones exactas que sanitize-html
+    // espera (hay un htmlparser2 v10 hoisted en el root que NO es el suyo).
+    noExternal: [
+      "sanitize-html",
+      "htmlparser2",
+      "domhandler",
+      "domutils",
+      "dom-serializer",
+      "domelementtype",
+      "entities",
+      "parse-srcset",
+      "is-plain-object",
+      "deepmerge",
+      "escape-string-regexp",
+      "launder",
+    ],
+  },
   plugins: [
     remix({
       presets: [vercelPreset()],
