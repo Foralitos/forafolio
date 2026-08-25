@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  @apply dark:bg-gray-950 overflow-x-hidden;
+}
+
+/* Aplanado respecto al Remix: allá esta media query vivía anidada dentro de
+   `html, body` y el PostCSS de Vite la desanidaba. El pipeline de Next no
+   garantiza ese nesting, así que se declara al nivel de arriba. */
+@media (prefers-color-scheme: dark) {
+  html,
+  body {
+    color-scheme: dark;
+  }
+}
+
+/* Estilos del contenido renderizado del blog (markdown -> HTML) */
+.prose-blog {
+  @apply text-gray-300 leading-relaxed;
+}
+.prose-blog h1,
+.prose-blog h2,
+.prose-blog h3 {
+  @apply font-mondwest text-white mt-10 mb-4 leading-tight;
+}
+.prose-blog h1 { @apply text-2xl; }
+.prose-blog h2 { @apply text-xl; }
+.prose-blog h3 { @apply text-lg; }
+.prose-blog p { @apply my-4; }
+.prose-blog a { @apply text-violet-300 underline hover:text-violet-200; }
+.prose-blog ul { @apply list-disc pl-6 my-4 space-y-1; }
+.prose-blog ol { @apply list-decimal pl-6 my-4 space-y-1; }
+.prose-blog blockquote {
+  @apply border-l-4 border-gray-700 pl-4 italic text-gray-400 my-6;
+}
+.prose-blog code {
+  @apply bg-gray-800 text-violet-200 px-1.5 py-0.5 text-sm font-mono;
+}
+.prose-blog pre {
+  @apply bg-gray-900 border-2 border-gray-700 p-4 overflow-x-auto my-6 text-sm;
+}
+.prose-blog pre code { @apply bg-transparent p-0 text-gray-200; }
+.prose-blog img { @apply border-2 border-gray-700 my-6; }
+.prose-blog hr { @apply border-gray-700 my-8; }

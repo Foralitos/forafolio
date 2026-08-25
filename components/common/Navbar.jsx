@@ -1,0 +1,352 @@
+"use client";
+
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { List, X } from 'phosphor-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useCDMXTime } from '@/hooks/useCDMXTime';
+
+const mobileMenuVariants = {
+  closed: {
+    x: "100%",
+    transition: {
+      duration: 0.5,
+      ease: "easeInOut",
+      when: "afterChildren"
+    }
+  },
+  open: {
+    x: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeInOut",
+      when: "beforeChildren",
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const mobileItemVariants = {
+  closed: { x: 50, opacity: 0 },
+  open: { x: 0, opacity: 1 }
+};
+
+export const Navbar = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
+  const { formattedTime } = useCDMXTime();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Update active section based on scroll position
+      const sections = ['home', 'about', 'projects', 'contact'];
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [mobileMenuOpen]);
+
+  const handleNavClick = (href) => {
+    const element = document.getElementById(href.replace('#', ''));
+    if (element) {
+      const yOffset = -80;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+      });
+    }
+    setMobileMenuOpen(false);
+  };
+
+  const navItems = [
+    { name: 'About', href: '#about' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Contact', href: '#contact' },
+  ];
+
+  const isActive = (href) => activeSection === href.replace('#', '');
+
+  return (
+    <>
+      {/* Desktop Navbar - Centered Glass Effect */}
+      <div className="absolute top-6 left-0 right-0 z-50 hidden md:block pointer-events-none">
+        <div className="flex justify-center items-center w-full px-8">
+          {/* Spacer for centering navbar */}
+          <div className="flex-1" />
+
+          {/* Centered Navbar */}
+          <motion.nav
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="pointer-events-auto"
+          >
+            {/* Glass Container */}
+            <div className="flex items-center gap-1 px-4 py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl">
+            {/* Logo/Home Icon */}
+            <button
+              onClick={() => handleNavClick('#home')}
+              className="px-4 py-2 rounded-full hover:bg-white/10 transition-all duration-200"
+              aria-label="Home"
+            >
+              <svg
+                className="w-5 h-5 text-white/90"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+            </button>
+
+            {/* Divider */}
+            <div className="w-px h-6 bg-white/20" />
+
+            {/* Nav Items */}
+            {navItems.map((item) => (
+              <button
+                key={item.name}
+                onClick={() => handleNavClick(item.href)}
+                className={`px-4 py-2 rounded-full text-sm font-normal transition-all duration-200 ${
+                  isActive(item.href)
+                    ? 'bg-white/20 text-white'
+                    : 'text-white/70 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                {item.name}
+              </button>
+            ))}
+            <Link
+              href="/blog"
+              className="px-4 py-2 rounded-full text-sm font-normal text-white/70 hover:text-white hover:bg-white/10 transition-all duration-200"
+            >
+              Blog
+            </Link>
+            </div>
+          </motion.nav>
+
+          {/* Clock Display */}
+          <div className="flex-1 flex justify-end">
+            <motion.div
+              initial={{ y: -100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+              className="pointer-events-auto"
+            >
+              <div className="flex items-center gap-2">
+                <svg
+                  className="w-4 h-4 text-white/70"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+                <span className="text-sm font-medium text-white/90">{formattedTime}</span>
+                <span className="text-xs font-normal text-white/60">Mexico City</span>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Navbar - Glassmorphic Style (Compact) */}
+      <div className="absolute top-6 left-0 right-0 z-50 md:hidden pointer-events-none">
+        <div className="flex justify-center px-4">
+          <motion.nav
+            initial={{ y: -100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="pointer-events-auto"
+          >
+            {/* Glass Container - Compact */}
+            <div className="flex items-center gap-1 px-2 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl">
+              {/* Home Icon */}
+              <button
+                onClick={() => handleNavClick('#home')}
+                className="p-2 rounded-full hover:bg-white/10 transition-all duration-200"
+                aria-label="Home"
+              >
+                <svg
+                  className="w-5 h-5 text-white/90"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+              </button>
+
+              {/* Divider */}
+              <div className="w-px h-6 bg-white/20" />
+
+              {/* Menu Button - Icon Only */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 rounded-full hover:bg-white/10 transition-all duration-200"
+                aria-expanded={mobileMenuOpen}
+                aria-label="Toggle menu"
+              >
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={mobileMenuOpen ? "close" : "open"}
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {mobileMenuOpen ? (
+                      <X size={20} weight="bold" className="text-white/90" />
+                    ) : (
+                      <List size={20} weight="bold" className="text-white/90" />
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+              </button>
+            </div>
+          </motion.nav>
+        </div>
+      </div>
+
+      {/* Mobile Menu Overlay - Glassmorphic */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-black/70 backdrop-blur-xl md:hidden z-40"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Mobile Menu Content */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            variants={mobileMenuVariants}
+            initial="closed"
+            animate="open"
+            exit="closed"
+            className="fixed inset-y-0 right-0 w-full bg-black/80 backdrop-blur-xl md:hidden z-50"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="absolute top-6 right-6 p-3 rounded-full bg-white/10 border border-white/20 text-white/90 hover:bg-white/20 transition-colors"
+              aria-label="Close menu"
+            >
+              <X size={20} weight="bold" />
+            </button>
+
+            <div className="flex flex-col h-full pt-20 pb-6 px-6">
+              <div className="flex-1 flex flex-col justify-center space-y-6">
+                {[{ name: 'Home', href: '#home' }, ...navItems].map((item, index) => (
+                  <motion.div
+                    key={item.name}
+                    variants={mobileItemVariants}
+                    custom={index}
+                    className="overflow-hidden"
+                  >
+                    <button
+                      onClick={() => handleNavClick(item.href)}
+                      className={`group relative overflow-hidden text-2xl font-medium transition-colors duration-300 ease-out w-full text-left ${
+                        isActive(item.href) ? 'text-white' : 'text-white/70 hover:text-white'
+                      }`}
+                    >
+                      <motion.span
+                        className="relative z-10 block"
+                        whileHover={{ x: 10 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {item.name}
+                      </motion.span>
+                      {isActive(item.href) && (
+                        <motion.div
+                          layoutId="mobile-active-pill"
+                          className="absolute inset-0 bg-white/10 rounded-lg -z-10"
+                          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                        />
+                      )}
+                    </button>
+                  </motion.div>
+                ))}
+                <motion.div variants={mobileItemVariants} className="overflow-hidden">
+                  <Link
+                    href="/blog"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block text-2xl font-medium text-white/70 hover:text-white transition-colors duration-300 w-full text-left"
+                  >
+                    Blog
+                  </Link>
+                </motion.div>
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="space-y-4 pt-6 border-t border-white/10"
+              >
+                {/* Clock Display */}
+                <div className="flex items-center gap-2 text-white/70">
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                  <span className="text-sm font-medium text-white/90">{formattedTime}</span>
+                  <span className="text-xs font-normal text-white/60">Mexico City</span>
+                </div>
+
+                {/* Copyright */}
+                <p className="text-sm text-white/50">
+                  © {new Date().getFullYear()} Fora. All rights reserved.
+                </p>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};
