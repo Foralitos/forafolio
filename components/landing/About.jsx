@@ -1,7 +1,7 @@
 "use client";
 
 import ReactDOM from 'react-dom';
-import { NPCDialogBox } from './NPCDialogBox';
+import { DialogBox } from './DialogBox';
 import { useCDMXTime } from '@/hooks/useCDMXTime';
 
 // NPC dialog texts in English
@@ -17,15 +17,18 @@ const npcDialogs = [
 
 export const About = () => {
   const { isDaytime } = useCDMXTime();
-  const backgroundImage = isDaytime ? '/AboutBgDay.png' : '/AboutBg.png';
+  // El personaje ya vive pintado dentro del fondo, así que desapareció el
+  // sprite 8-bit que flotaba encima (ForaNpc.png) — era lo que rompía el
+  // estilo contra la pintura del parque.
+  const backgroundImage = isDaytime ? '/AboutDay.webp' : '/AboutNight.webp';
 
   // Ver Hero.jsx: los <link rel="preload"> del Remix no funcionan dentro del
   // JSX en App Router.
-  ReactDOM.preload('/AboutBgDay.png', { as: 'image' });
-  ReactDOM.preload('/AboutBg.png', { as: 'image' });
+  ReactDOM.preload('/AboutDay.webp', { as: 'image' });
+  ReactDOM.preload('/AboutNight.webp', { as: 'image' });
 
   const handleStoryComplete = () => {
-    // Scroll to Projects section when NPC story finishes
+    // Scroll to Projects section when the story finishes
     const projectsElement = document.getElementById('projects');
     if (projectsElement) {
       const yOffset = -80; // Navbar offset
@@ -49,27 +52,18 @@ export const About = () => {
             imageRendering: 'pixelated'
           }}
         />
+        {/* Degradado hacia abajo: la tarjeta de vidrio necesita algo de
+            oscuridad detrás para que el texto se lea sobre el pasto claro
+            de la versión de día. */}
+        <div className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-black/50 to-transparent" />
       </div>
 
-      {/* NPC Character in the scene */}
-      <div className="absolute bottom-1/4 left-1/2 transform -translate-x-1/2 z-10">
-        <img
-          src="/ForaNpc.png"
-          alt="NPC Character"
-          className="w-32 h-32 md:w-48 md:h-48 object-contain"
-          style={{ imageRendering: 'pixelated' }}
-        />
-      </div>
-
-      {/* Dialog Box at bottom - RPG style */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 px-4 pb-8 md:pb-12">
-        <NPCDialogBox
-          avatarSrc="/ForaNpc.png"
+      {/* Caja de diálogo */}
+      <div className="absolute bottom-0 left-0 right-0 z-20 px-4 pb-10 md:pb-14">
+        <DialogBox
           dialogs={npcDialogs}
           speed={30}
-          delayBetweenDialogs={0}
           onComplete={handleStoryComplete}
-          compact={true}
         />
       </div>
     </section>
