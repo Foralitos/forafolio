@@ -27,7 +27,7 @@ yarn seed           # siembra los proyectos iniciales en Mongo (solo si está va
 - MongoDB con Mongoose (`libs/mongoose.js`) para los datos; driver nativo (`libs/mongo.js`) solo para el adapter de NextAuth
 - NextAuth v5 con Google, un solo usuario permitido
 - Cloudinary para las imágenes que se suben desde el admin
-- Deploy en Vercel, dominio `forafolio.vercel.app`
+- Deploy en Vercel, dominio `www.foradelgado.tech` (el apex redirige a www; `forafolio.vercel.app` sigue respondiendo)
 
 ## Estructura
 
