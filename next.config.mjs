@@ -9,6 +9,8 @@ const nextConfig = {
     root: dirname(fileURLToPath(import.meta.url)),
   },
   images: {
+    // Sin optimizador de Vercel: la cuota gratuita de transformaciones (5K/mes) se agoto.
+    unoptimized: true,
     // Las portadas de proyectos y posts viven en Cloudinary; los avatares de
     // Google llegan por la sesión de NextAuth.
     remotePatterns: [
