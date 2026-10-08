@@ -38,5 +38,7 @@ export const LINKS = {
   email: "mailto:elfora.dev@gmail.com",
   linkedin: "https://linkedin.com/in/foradelgado",
   x: "https://x.com/ElforaDev",
+  github: "https://github.com/Foralitos",
+  instagram: "https://instagram.com/fora_delgado",
   agenda: "https://tidycal.com/elforadev/15-minute-meeting",
 };

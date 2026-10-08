@@ -117,3 +117,9 @@ body {
   @apply my-8;
   border-color: rgb(var(--desk-line) / 0.1);
 }
+
+/* Barritas del ecualizador de "now playing" (NowPlaying.jsx). */
+@keyframes eq {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
