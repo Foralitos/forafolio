@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed": "node --env-file=.env scripts/seed.mjs"
+    "seed": "node --env-file=.env scripts/seed.mjs",
+    "project-details": "node --env-file=.env scripts/project-details.mjs",
+    "add-projects": "node --env-file=.env scripts/add-projects.mjs"
   },
   "dependencies": {
     "@auth/mongodb-adapter": "^3.11.2",

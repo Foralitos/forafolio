@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, Check, Copy, LinkedinLogo } from "phosphor-react";
 import { LINKS } from "./apps";
 import { XLogo } from "./XLogo";
+import { ProjectCover } from "@/components/landing/ProjectCover";
 
 const EMAIL = "elfora.dev@gmail.com";
 
@@ -130,15 +131,15 @@ export function Welcome({ projects = [] }) {
             {projects.map((project) => (
               <Link
                 key={project.id}
-                href="/projects"
+                href={`/projects/${project.slug}`}
                 className="panel group overflow-hidden rounded-2xl transition-transform duration-200 hover:-translate-y-0.5"
               >
                 <div className="aspect-[16/10] overflow-hidden bg-desk-line/5">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={project.image}
-                    alt=""
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                  <ProjectCover
+                    project={project}
+                    autoPlay={false}
+                    titleClassName="text-3xl"
+                    className="transition-transform duration-300 group-hover:scale-[1.03]"
                   />
                 </div>
                 <div className="p-4">

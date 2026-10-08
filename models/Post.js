@@ -34,16 +34,9 @@ export function toPostDTO(doc) {
   };
 }
 
-// Genera un slug url-safe a partir de un título.
-export function slugify(input) {
-  return input
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "") // quita acentos
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 80);
-}
+// slugify vive en libs/slug.js (también lo usan los proyectos); se reexporta
+// aquí para no romper los imports del admin del blog.
+export { slugify } from "@/libs/slug";
 
 export async function getPublishedPosts() {
   await connectMongo();

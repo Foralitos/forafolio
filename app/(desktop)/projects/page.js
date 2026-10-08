@@ -1,5 +1,5 @@
 import { Window } from "@/components/desktop/Window";
-import { Projects } from "@/components/landing/Projects";
+import { Projects, ProjectsToolbar } from "@/components/landing/Projects";
 import { getPublishedProjects } from "@/models/Project";
 import { getSEOTags } from "@/libs/seo";
 
@@ -19,7 +19,7 @@ export default async function ProjectsPage() {
   }
 
   return (
-    <Window title="Projects">
+    <Window title="Projects" toolbar={<ProjectsToolbar count={projects.length} />}>
       <Projects projects={projects} />
     </Window>
   );

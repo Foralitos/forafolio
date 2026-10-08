@@ -16,7 +16,10 @@ import { useDesktop } from "./Desktop";
 // - El scroll vive dentro del cuerpo: el escritorio nunca hace scroll.
 // - backHref (opcional) pone una flecha ‹ junto a los semáforos para volver
 //   de una página interna (un post, un proyecto) a su lista.
-export function Window({ title, children, bodyClassName = "", backHref }) {
+// - toolbar (opcional) va fijo debajo del título, fuera del scroll y sin
+//   fondo propio: comparte el vidrio de la ventana (un backdrop-filter anidado
+//   se ve como una franja más clara).
+export function Window({ title, children, bodyClassName = "", backHref, toolbar }) {
   const { windowOpen, closeWindow } = useDesktop();
   const [maximized, setMaximized] = useState(false);
   const toggleMaximize = () => setMaximized((m) => !m);
@@ -65,6 +68,10 @@ export function Window({ title, children, bodyClassName = "", backHref }) {
               {title}
             </h2>
           </div>
+
+          {toolbar && (
+            <div className="shrink-0 border-b border-desk-line/[0.08] px-4 py-2.5">{toolbar}</div>
+          )}
 
           {/* Cuerpo */}
           <div className={`relative flex-1 overflow-y-auto overscroll-contain ${bodyClassName}`}>

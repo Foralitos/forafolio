@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Furbo",
+    "slug": "furbo",
+    "summary": "An AI sports buddy you text on WhatsApp: predictions, live news and banter about your team.",
+    "role": "Founder & full-stack developer",
+    "year": null,
+    "status": "paused",
+    "stack": ["Next.js", "LangChain", "Azure OpenAI", "Twilio", "MongoDB", "Stripe"],
+    "body": "## The idea\n\nFollowing your team means jumping between apps, group chats and score sites. Furbo puts all of that in the one place fans already live: a WhatsApp chat. You text it like a friend and it answers with predictions, the latest news and opinions about your team.\n\n## What I built\n\n- A conversational agent built with LangChain on Azure OpenAI that keeps up with sports news and talks about it in a natural, fan-like way.\n- The WhatsApp channel through Twilio, plus a web version with English and Spanish.\n- Accounts, subscriptions with Stripe and transactional emails.\n\n## Where it's going\n\nThe web and WhatsApp MVP works, and I'm pausing it to explore a bigger idea: putting the same AI brain inside licensed team plush toys, so the conversation happens with something you can actually hold."
+  },
+  {
+    "title": "ElAtletico",
+    "slug": "elatletico",
+    "summary": "A Spanish-language digital sports paper and daily newsletter, researched and written by an AI pipeline.",
+    "role": "Founder & developer",
+    "year": 2025,
+    "status": "live",
+    "stack": ["Next.js", "Python", "MongoDB", "OpenAI", "ESPN API", "Raspberry Pi"],
+    "body": "## The idea\n\nMexican sports fans read most of their news in English or in clickbait. El Atlético is a clean, multi-sport paper in Spanish, with a daily newsletter, that covers Liga MX, the big European leagues, NFL, MLB, NBA, NHL and UFC.\n\n## What I built\n\n- **A content pipeline in Python** that runs on a cron job on a Raspberry Pi. It pulls news from ESPN's public API, filters and de-duplicates stories, picks a balanced set every day across sports and teams, and writes each article with OpenAI models.\n- **A deterministic verifier that acts as the editor.** Clean articles publish themselves; anything suspicious stays hidden with the reason logged, so a bad note never reaches readers.\n- **The site and newsletter** in Next.js, reading only what the verifier approved.\n\n## What I learned\n\nThe first version ran on n8n. Rebuilding it as plain Python jobs made it cheaper (around a third of a cent per article), easier to test and much easier to reason about when something goes wrong."
+  },
+  {
+    "title": "Hablar con Santa",
+    "slug": "hablar-con-santa",
+    "summary": "Parents buy a call and Santa phones their kid, with an AI voice that asks about their wish list.",
+    "role": "Founder & full-stack developer",
+    "year": 2024,
+    "status": "live",
+    "stack": ["Next.js", "MongoDB", "Stripe", "Bland AI", "Resend"],
+    "body": "## The idea\n\nA seasonal product for Mexican parents: buy a pack of calls, type your kid's name and phone number, and Santa calls them in Spanish.\n\n## What I built\n\n- **The voice call flow**: Santa's personality is a long, carefully tuned prompt that spends most of the call on the kid's wish list, asks follow-up questions about each gift and never breaks character.\n- **Credits that can't be lost**: a credit is taken before the call is placed and refunded automatically if the call fails.\n- **A gift summary for parents**: after each call, a structured summary of what the kid asked for is emailed to the parent.\n- Stripe checkout without forcing an account, so buying a call takes a minute.\n\n## What's next\n\nFor the next season I'm moving off the current voice provider and working on a video call with an animated Santa character."
+  },
+  {
+    "title": "FORAUI",
+    "slug": "foraui",
+    "summary": "A Tailwind CSS component and animation library with ready-to-copy UI and fluid motion.",
+    "role": "Creator",
+    "year": null,
+    "status": "live",
+    "stack": ["Next.js", "Tailwind CSS"],
+    "body": "## The idea\n\nI kept rebuilding the same animated components from project to project, so I started collecting them in one place: FORAUI, a library of Tailwind CSS components with smooth motion that you can copy into any project.\n\n<!-- TODO Fora: agrega qué componentes trae, cuándo lo hiciste y qué aprendiste. -->"
+  }
+]

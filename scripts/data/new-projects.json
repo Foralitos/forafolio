@@ -1,0 +1,175 @@
+[
+  {
+    "title": "Sport Metrics",
+    "slug": "sport-metrics",
+    "description": "Sports analytics for coaches and analysts: game data and video, together, the same day.",
+    "summary": "Sports analytics for coaches and analysts: play-by-play data linked to the exact second of video, ready the same day.",
+    "tags": [
+      "Sports analytics",
+      "Next.js",
+      "Video",
+      "Data"
+    ],
+    "liveUrl": "https://www.sportmetrics.app",
+    "role": "Co-founder & developer",
+    "year": 2026,
+    "status": "live",
+    "stack": [
+      "Next.js",
+      "Tailwind CSS",
+      "MongoDB",
+      "next-intl",
+      "Public league APIs"
+    ],
+    "featured": true,
+    "body": "## The problem\n\nCoaches and analysts usually wait one to two days to get the video and data of a game they just played. By the time the numbers arrive, the next game is already on top of them.\n\n## What we're building\n\nSport Metrics is sports analytics for coaches and analysts of any sport and league. With [Kira](https://github.com/KiraBelak) I'm building a platform that captures every play of a game, links it to the exact second of the video and turns it into reports a coaching staff can actually use.\n\n- **Data you can trust.** We cross-check two independent public sources for each game and rebuild the box score from the play-by-play, so every number can be traced back to a play.\n- **Every stat is a clip.** Click a play and the video jumps to that moment.\n- **Game reports** for analysts and coaches, with roles and a PDF export to share with the staff.\n- Bilingual, English and Spanish.\n\n## My part\n\nI work on the product and the web app: the landing, the game report and its PDF export, and the research behind which data sources we can rely on. Kira leads the video capture engine and the heavy infrastructure."
+  },
+  {
+    "title": "Klai",
+    "slug": "klai",
+    "description": "Chrome extension that draws animated, data-driven graphics on top of any live video, from a plain-text command.",
+    "summary": "Type a command and an AI draws live, animated graphics on top of any video you're watching. Winner of the New Interfaces track at Platanus Hack 26.",
+    "tags": [
+      "Hackathon",
+      "AI",
+      "Chrome extension",
+      "Generative UI"
+    ],
+    "liveUrl": "",
+    "role": "Developer",
+    "year": 2026,
+    "status": "archived",
+    "stack": [
+      "Chrome Extension (MV3)",
+      "Next.js",
+      "Claude",
+      "OpenAI",
+      "Firecrawl"
+    ],
+    "body": "## Winner, New Interfaces track: Platanus Hack 26 (CDMX)\n\nKlai (first called Overlai) was built in 48 hours at Platanus Hack 26 in Mexico City, in June 2026, and won the New Interfaces track.\n\n## The idea\n\nWhat if the graphics you see on a sports broadcast (scores, stats, player cards) could be generated on demand, on top of any video, by just asking for them?\n\n## How it works\n\n- A **Chrome extension** sits on top of the video you're watching.\n- You type what you want to see, like \"show me this player's season stats\".\n- A **backend in Next.js** looks up the data on the web and an LLM generates the UI for it, which the extension renders as an animated overlay on the live video.\n\n## What came after\n\nAfter the hackathon I explored turning it into a product for small sports broadcasts. The honest conclusion was that Klai is a great feature but not a business on its own, and that thinking fed directly into [Sport Metrics](/projects/sport-metrics)."
+  },
+  {
+    "title": "justenvs",
+    "slug": "justenvs",
+    "description": "Native macOS app to store and share your projects' environment variables, encrypted.",
+    "summary": "A native Mac app to keep every project's .env encrypted, unlocked with Touch ID, and shared through zero-knowledge links.",
+    "tags": [
+      "macOS",
+      "Swift",
+      "Security",
+      "Developer tools"
+    ],
+    "liveUrl": "https://justenvs.app",
+    "role": "Founder & developer",
+    "year": 2026,
+    "status": "live",
+    "stack": [
+      "Swift",
+      "SwiftUI",
+      "CryptoKit",
+      "Keychain + Touch ID",
+      "Sparkle",
+      "Next.js"
+    ],
+    "body": "## The problem\n\nEvery developer has `.env` files scattered across old projects, pasted in chats and lost when they switch laptops. They hold the most sensitive keys we have, and we treat them like notes.\n\n## What I built\n\n- **A native macOS app** in Swift and SwiftUI. Your environment variables are encrypted on your Mac with CryptoKit, and the key lives in the Keychain behind Touch ID.\n- **Zero-knowledge sharing.** Send a teammate a link; the server only ever sees encrypted data it can't read.\n- **`.env` sync** with your project folders, so the app stays the source of truth.\n- **Auto-updates** with Sparkle and a marketing site at justenvs.app.\n\n## Shipping it\n\nI launched it in June 2026 and shipped releases almost daily to its first users. The launch week included an all-nighter when Apple stopped recognizing the app's bundle ID: I moved to a new one, restored Touch ID and walked users through reinstalling. Shipping a real Mac app taught me signing, notarization and update channels the hard way."
+  },
+  {
+    "title": "Artemisa",
+    "slug": "artemisa",
+    "description": "Free tool that finds where your photos (real or AI deepfakes) are exposed online, without your photo ever leaving your device.",
+    "summary": "Find out if intimate images of you, real or AI-made, are circulating online, and get the evidence and guidance to act.",
+    "tags": [
+      "Hackathon",
+      "AI",
+      "Privacy",
+      "Social impact"
+    ],
+    "liveUrl": "https://hacklatam-psi.vercel.app",
+    "role": "Developer (team of 3)",
+    "year": 2026,
+    "status": "archived",
+    "stack": [
+      "Next.js",
+      "LangGraph",
+      "OpenRouter",
+      "MongoDB",
+      "React PDF",
+      "SerpAPI"
+    ],
+    "body": "## Why\n\nDigital violence in Latin America is not the exception. Deepfakes are overwhelmingly non-consensual sexual content, and most of the victims are women. When it happens, people don't know where their images are, how to prove it or who to call.\n\n## What it does\n\nBuilt in a weekend at HackLatam (May 2026) with [Kira](https://github.com/KiraBelak) and [Pedro](https://github.com/RoniHY):\n\n- **Your photo never leaves your device.** It's processed locally into a mathematical fingerprint; only that fingerprint is used to search.\n- **Scans the open web**: public sites, forums, image boards and reverse image search, looking for real or AI-altered images of you.\n- **Evidence you can use**: a downloadable PDF report with URLs, screenshots and metadata to take to a lawyer, an organization or a police report.\n- **A legal assistant chat** that explains your rights, the relevant laws and organizations that can help.\n\n## My part\n\nI set up the project's foundation (Next.js, auth, database), built the legal assistant agent with LangGraph and streaming responses, and the PDF evidence report. Kira built the image-scanning engine and Pedro the landing and the defense guide."
+  },
+  {
+    "title": "Koi School",
+    "slug": "koi-school",
+    "description": "A gamified poker academy for beginners: short lessons, quizzes and boss fights, no real money. From fish to dragon.",
+    "summary": "Learn poker like an RPG: short lessons, quizzes and boss fights, an honest bankroll tracker and an AI coach that reviews your real hands.",
+    "tags": [
+      "Education",
+      "Gamification",
+      "AI",
+      "Next.js"
+    ],
+    "liveUrl": "https://koischool.vercel.app",
+    "role": "Founder & developer",
+    "year": 2026,
+    "status": "live",
+    "stack": [
+      "Next.js",
+      "MongoDB",
+      "NextAuth",
+      "OpenAI",
+      "Vitest"
+    ],
+    "body": "## Why\n\nI want to get good at poker, and the serious tools are expensive and confusing. So I built the academy I wanted: something that feels like a game and keeps me honest.\n\n## What's inside\n\n- **Courses as quests**: from fundamentals to postflop, GTO and tournaments, each lesson with its own quiz.\n- **Practice and progression** inspired by Codédex: levels, ranks, weekly missions and a koi mascot that evolves into a dragon as you improve.\n- **Bankroll tracker** with a tilt check-in on every session and alerts when you're playing above your bankroll.\n- **AI coach for real sessions**: upload your hand history and get an analysis of the spots where you lost money.\n- **Public range charts**: a free page with all the preflop ranges, rendered server-side for search engines.\n\n## Where it is\n\nIt started as Poker Quest, a personal app, and grew into Koi School: a multi-user academy with accounts, profiles and progress tracking. Its motto: from fish to dragon."
+  },
+  {
+    "title": "sweeply",
+    "slug": "sweeply",
+    "description": "Open-source CLI that frees up disk space by safely deleting rebuildable folders from old projects.",
+    "summary": "An open-source terminal app that finds the node_modules, build folders and caches eating your disk, and tells you which ones are safe to delete.",
+    "tags": [
+      "Open source",
+      "CLI",
+      "TypeScript",
+      "npm"
+    ],
+    "liveUrl": "https://www.npmjs.com/package/sweeply",
+    "repoUrl": "https://github.com/Foralitos/sweeply",
+    "role": "Creator & maintainer",
+    "year": 2026,
+    "status": "live",
+    "stack": [
+      "TypeScript",
+      "Node.js",
+      "Ink",
+      "React",
+      "GitHub Actions"
+    ],
+    "body": "## The problem\n\nOld projects quietly eat your disk: `node_modules`, `.next`, `dist`, Python virtualenvs, Rust `target`, iOS `Pods`. Tools to delete them exist, but none tell you whether deleting is actually safe.\n\n## What I built\n\n`npx sweeply` opens an interactive terminal UI that scans your machine, groups the dead weight by project and deletes it with confirmation.\n\n- **Multi-ecosystem**: JavaScript, Python, Rust, iOS and more, in one scan.\n- **A safety traffic light per project** based on git: green when everything is pushed, yellow when there's local work, red when it's not a repo at all and deleting would be unrecoverable.\n- **Bilingual**: English by default, Spanish if your system is in Spanish.\n\n## Shipping it properly\n\nPublished on npm with trusted publishing and provenance, a protected `main` branch, CI with type checks and CodeQL, Dependabot and secret scanning. A tool that deletes files has to be boringly trustworthy."
+  },
+  {
+    "title": "πt (Pit)",
+    "slug": "pit",
+    "description": "A desktop AI agent you talk to: it listens, plans with Claude, does real work with tools and answers out loud.",
+    "summary": "A physical AI agent for your desk: push a button, ask for something, and it plans, uses real tools and answers out loud.",
+    "tags": [
+      "Hackathon",
+      "Hardware",
+      "AI agents",
+      "ESP32"
+    ],
+    "liveUrl": "",
+    "role": "Developer (team of 2)",
+    "year": 2026,
+    "status": "archived",
+    "stack": [
+      "ESP32-S3",
+      "ReSpeaker",
+      "Python",
+      "FastAPI",
+      "Whisper",
+      "Claude"
+    ],
+    "body": "## The idea\n\nAI agents live in browser tabs. What if one lived on your desk, and you could just talk to it?\n\n## What we built in 48 hours\n\nWith [ampersand](https://github.com/arampersand), at a hackathon in June 2026:\n\n- **The device**: an ESP32-S3 with a ReSpeaker microphone array, a speaker and LED rings that animate while it listens and thinks.\n- **The loop**: push to talk → audio streams over WebSocket to a Python backend → Whisper transcribes → Claude makes a plan → it runs real tools → it answers in spoken Spanish.\n- **Real tools, not a demo**: it can search and open issues and pull requests on GitHub, hand coding tasks to Claude Code and run a strict allowlist of shell commands like tests and git status.\n\n## What's next\n\nThe prototype proved the whole pipeline works end to end, and also hit the limits of the hardware we picked. We're planning a v2 built properly instead of patching the hackathon version."
+  }
+]

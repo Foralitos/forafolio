@@ -3,8 +3,12 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import { saveProject } from "../actions";
+import MediaUploader from "./MediaUploader";
 
-function Field({ label, name, defaultValue, type = "text", required = false }) {
+const inputClase =
+  "w-full bg-gray-900 border-2 border-gray-700 focus:border-white px-3 py-2 text-sm outline-none";
+
+function Field({ label, name, defaultValue, type = "text", required = false, hint }) {
   return (
     <div>
       <label className="block text-sm text-gray-400 mb-1">{label}</label>
@@ -13,9 +17,19 @@ function Field({ label, name, defaultValue, type = "text", required = false }) {
         name={name}
         defaultValue={defaultValue}
         required={required}
-        className="w-full bg-gray-900 border-2 border-gray-700 focus:border-white px-3 py-2 text-sm outline-none"
+        className={inputClase}
       />
+      {hint ? <p className="text-gray-600 text-xs mt-1">{hint}</p> : null}
     </div>
+  );
+}
+
+function Seccion({ titulo, children }) {
+  return (
+    <fieldset className="space-y-5 border-t-2 border-gray-800 pt-6">
+      <legend className="font-pixel text-xs tracking-wider text-gray-400 pr-3">{titulo}</legend>
+      {children}
+    </fieldset>
   );
 }
 
@@ -109,6 +123,68 @@ export default function ProjectForm({ id, isNew, project }) {
               : "Deja vacío para conservar la imagen actual."}
           </p>
         </div>
+
+        <Seccion titulo="PÁGINA DEL PROYECTO">
+          <Field
+            label="Slug (URL: /projects/…)"
+            name="slug"
+            defaultValue={project?.slug}
+            hint="Vacío = se genera del título."
+          />
+          <Field label="Frase corta (summary)" name="summary" defaultValue={project?.summary} />
+          <div>
+            <label htmlFor="body" className="block text-sm text-gray-400 mb-1">
+              Texto largo (markdown)
+            </label>
+            <textarea
+              id="body"
+              name="body"
+              defaultValue={project?.body}
+              rows={14}
+              className={`${inputClase} font-mono`}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <Field label="Año" name="year" type="number" defaultValue={project?.year ?? ""} />
+            <div>
+              <label htmlFor="status" className="block text-sm text-gray-400 mb-1">Estado</label>
+              <select
+                id="status"
+                name="status"
+                defaultValue={project?.status ?? "live"}
+                className={inputClase}
+              >
+                <option value="live">Live</option>
+                <option value="paused">Paused</option>
+                <option value="archived">Archived</option>
+              </select>
+            </div>
+          </div>
+          <Field label="Rol" name="role" defaultValue={project?.role} hint="Ej. Founder & full-stack developer" />
+          <Field
+            label="Stack (separado por coma)"
+            name="stack"
+            defaultValue={project?.stack?.join(", ")}
+          />
+          <Field label="Repo de GitHub (opcional)" name="repoUrl" type="url" defaultValue={project?.repoUrl} />
+          <MediaUploader
+            name="gallery"
+            label="Galería (capturas)"
+            kind="image"
+            multiple
+            initial={project?.gallery}
+          />
+          <MediaUploader name="video" label="Video de cómo funciona" kind="video" initial={project?.video} />
+          <label className="flex items-center gap-2 text-sm text-gray-300">
+            <input
+              type="checkbox"
+              name="featured"
+              defaultChecked={project?.featured ?? false}
+              className="w-4 h-4 accent-white"
+            />
+            Destacado (banner grande en Proyectos)
+          </label>
+        </Seccion>
 
         <label className="flex items-center gap-2 text-sm text-gray-300">
           <input

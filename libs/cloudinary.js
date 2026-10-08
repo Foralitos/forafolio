@@ -59,3 +59,24 @@ export async function uploadImage(file, folder = "forafolio") {
     stream.end(buffer);
   });
 }
+
+/**
+ * Firma una subida directa navegador → Cloudinary. Los videos y la galería no
+ * pueden pasar por una Server Action (Vercel corta el body en 4.5 MB), así que
+ * el navegador sube solo y aquí únicamente se firma, sin exponer el secret.
+ */
+export function signUpload(folder = "forafolio") {
+  configurar();
+  const timestamp = Math.round(Date.now() / 1000);
+  const signature = cloudinary.utils.api_sign_request(
+    { timestamp, folder },
+    process.env.CLOUDINARY_API_SECRET
+  );
+  return {
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+    apiKey: process.env.CLOUDINARY_API_KEY,
+    timestamp,
+    signature,
+    folder,
+  };
+}

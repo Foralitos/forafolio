@@ -1,5 +1,6 @@
 import config from "@/config";
 import { getPublishedPosts } from "@/models/Post";
+import { getPublishedProjects } from "@/models/Project";
 
 const BASE = `https://${config.domainName}`;
 
@@ -14,12 +15,20 @@ export default async function sitemap() {
     console.error("[sitemap] No se pudieron cargar posts:", err);
   }
 
+  let projects = [];
+  try {
+    projects = await getPublishedProjects();
+  } catch (err) {
+    console.error("[sitemap] No se pudieron cargar proyectos:", err);
+  }
+
   return [
     { url: `${BASE}/`, priority: 1 },
     { url: `${BASE}/about`, priority: 0.9 },
     { url: `${BASE}/projects`, priority: 0.9 },
     { url: `${BASE}/contact`, priority: 0.7 },
     { url: `${BASE}/blog`, priority: 0.8 },
+    ...projects.map((p) => ({ url: `${BASE}/projects/${p.slug}`, priority: 0.8 })),
     ...posts.map((p) => ({
       url: `${BASE}/blog/${p.slug}`,
       priority: 0.6,

@@ -1,73 +1,103 @@
 "use client";
 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowUpRight } from 'phosphor-react';
+import { FolderSimple, LinkSimple } from 'phosphor-react';
+import { ProjectCover } from './ProjectCover';
 
-// Grilla de proyectos dentro de la ventana de vidrio. Las tarjetas son "papel"
-// (.panel en globals.css): casi sólidas, para que se lean sobre cualquier
-// parte del wallpaper. Los colores salen de los tokens del escritorio, así que
-// el modo día/noche ya no necesita clases condicionales aquí.
+// La ventana de Proyectos, sencilla: un título grande, una frase y la
+// cuadrícula. Cada proyecto es su captura flotando (sin caja alrededor) con
+// título, descripción y el dominio debajo. La captura y el título abren la
+// página del proyecto; el dominio abre el sitio real.
+
+export const STATUS = {
+  live: { label: 'Live', dot: 'bg-green-500' },
+  paused: { label: 'Paused', dot: 'bg-amber-400' },
+  archived: { label: 'Archived', dot: 'bg-zinc-400' },
+};
+
+// Va en el `toolbar` de la ventana (fijo, fuera del scroll), como la barra de
+// ruta de Finder con el conteo de elementos.
+export function ProjectsToolbar({ count }) {
+  return (
+    <div className="flex items-center gap-2 rounded-lg bg-desk-line/[0.05] px-3 py-2 text-[14px] ring-1 ring-inset ring-desk-line/10">
+      <FolderSimple size={16} weight="duotone" className="text-blue-500" />
+      All projects
+      {typeof count === 'number' && (
+        <span className="ml-auto font-neuebit text-[15px] tracking-wider text-desk-fg/45">
+          {count} ITEMS
+        </span>
+      )}
+    </div>
+  );
+}
+
+// "https://www.sportmetrics.app/" → "sportmetrics.app"; sin sitio, el repo.
+function enlaceDe(project) {
+  const url = project.liveUrl || project.repoUrl;
+  if (!url) return null;
+  try {
+    const u = new URL(url);
+    const host = u.hostname.replace(/^www\./, '');
+    const texto = host === 'github.com' || host === 'npmjs.com' ? `${host}${u.pathname.replace(/\/$/, '')}` : host;
+    return { url, texto };
+  } catch {
+    return null;
+  }
+}
+
 export const Projects = ({ projects }) => {
   return (
-    <section className="px-5 py-8 md:px-8 md:py-10">
-      <header className="mb-8">
-        <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">Projects</h1>
-        <p className="mt-1 text-[15px] text-desk-fg/65">
-          A few things I&apos;ve built and shipped.
+    <section className="mx-auto max-w-6xl px-6 pb-14 pt-10 md:px-12 md:pt-14">
+      <header className="max-w-2xl">
+        <h1 className="text-5xl font-semibold tracking-tight md:text-6xl">projects.</h1>
+        <p className="mt-4 text-[17px] leading-relaxed text-desk-fg/65">
+          I&apos;ve built a lot over the years; these are the ones that taught me
+          the most and that I&apos;m proudest of.
         </p>
       </header>
 
       {projects.length === 0 ? (
-        <p className="text-[15px] text-desk-fg/60">Nothing here yet.</p>
+        <p className="mt-12 text-[15px] text-desk-fg/60">Nothing here yet.</p>
       ) : (
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, index) => (
-            <motion.a
-              key={project.liveUrl || index}
-              href={project.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
-              className="panel group flex flex-col overflow-hidden rounded-2xl transition-transform duration-200 hover:-translate-y-0.5"
-            >
-              <div className="aspect-[16/10] overflow-hidden bg-desk-line/5">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-                />
-              </div>
-
-              <div className="flex flex-1 flex-col p-4">
-                <div className="flex items-start justify-between gap-2">
-                  <h2 className="text-[15px] font-semibold leading-snug">{project.title}</h2>
-                  <ArrowUpRight
-                    size={16}
-                    weight="bold"
-                    className="mt-0.5 shrink-0 text-desk-fg/40 transition-colors group-hover:text-blue-500"
-                  />
-                </div>
-                <p className="mt-1.5 line-clamp-3 flex-1 text-[13px] leading-relaxed text-desk-fg/65">
-                  {project.description}
-                </p>
-                {project.tags?.length > 0 && (
-                  <div className="mt-3 flex flex-wrap gap-1.5">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-desk-line/[0.07] px-2 py-0.5 text-[11px] font-medium text-desk-fg/70"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+        <div className="mt-12 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+          {projects.map((project, index) => {
+            const enlace = enlaceDe(project);
+            return (
+              <motion.article
+                key={project.id}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, delay: Math.min(index, 8) * 0.05 }}
+              >
+                <Link href={`/projects/${project.slug}`} className="group block">
+                  <div className="aspect-[16/10] overflow-hidden rounded-2xl shadow-[0_18px_40px_-18px_rgba(0,0,0,0.45)] ring-1 ring-black/5 transition-transform duration-300 group-hover:-translate-y-1">
+                    <ProjectCover
+                      project={project}
+                      autoPlay={false}
+                      titleClassName="text-4xl"
+                      className="transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
                   </div>
-                )}
-              </div>
-            </motion.a>
-          ))}
+                  <h2 className="mt-5 text-xl font-semibold tracking-tight">{project.title}</h2>
+                  <p className="mt-2 line-clamp-3 text-[15px] leading-relaxed text-desk-fg/65">
+                    {project.summary || project.description}
+                  </p>
+                </Link>
+                {enlace ? (
+                  <a
+                    href={enlace.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-2 text-[14px] text-desk-fg/45 hover:text-blue-500"
+                  >
+                    <LinkSimple size={15} />
+                    {enlace.texto}
+                  </a>
+                ) : null}
+              </motion.article>
+            );
+          })}
         </div>
       )}
     </section>
