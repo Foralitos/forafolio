@@ -8,7 +8,6 @@ export const Contact = () => {
   const { isDaytime } = useCDMXTime();
 
   // Dynamic colors based on time
-  const bgColor = isDaytime ? 'bg-gray-50' : 'bg-gray-950';
   const textPrimary = isDaytime ? 'text-gray-900' : 'text-white';
   const textSecondary = isDaytime ? 'text-gray-600' : 'text-gray-400';
   const cardBg = isDaytime ? 'bg-white/95' : 'bg-gray-900/95';
@@ -28,7 +27,7 @@ export const Contact = () => {
   const glowColor = isDaytime ? 'bg-gray-900/20' : 'bg-white/20';
 
   return (
-    <section id="contact" className={`relative py-24 ${bgColor} overflow-hidden transition-colors duration-500`}>
+    <section className="relative py-10 md:py-14">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -1,6 +1,7 @@
 "use client";
 
 import ReactDOM from 'react-dom';
+import { useRouter } from 'next/navigation';
 import { DialogBox } from './DialogBox';
 import { useCDMXTime } from '@/hooks/useCDMXTime';
 
@@ -22,27 +23,19 @@ export const About = () => {
   // estilo contra la pintura del parque.
   const backgroundImage = isDaytime ? '/AboutDay.webp' : '/AboutNight.webp';
 
-  // Ver Hero.jsx: los <link rel="preload"> del Remix no funcionan dentro del
-  // JSX en App Router.
+  // Los <link rel="preload"> del Remix no funcionan dentro del JSX en App
+  // Router; se usa la API de React.
   ReactDOM.preload('/AboutDay.webp', { as: 'image' });
   ReactDOM.preload('/AboutNight.webp', { as: 'image' });
 
-  const handleStoryComplete = () => {
-    // Scroll to Projects section when the story finishes
-    const projectsElement = document.getElementById('projects');
-    if (projectsElement) {
-      const yOffset = -80; // Navbar offset
-      const y = projectsElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+  const router = useRouter();
 
-      window.scrollTo({
-        top: y,
-        behavior: 'smooth'
-      });
-    }
-  };
+  // Al terminar la historia ya no hay sección de abajo a la cual bajar: se
+  // abre la ventana de Proyectos.
+  const handleStoryComplete = () => router.push('/projects');
 
   return (
-    <section id="about" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative h-full min-h-[520px] overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <div
@@ -59,7 +52,7 @@ export const About = () => {
       </div>
 
       {/* Caja de diálogo */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 px-4 pb-10 md:pb-14">
+      <div className="absolute bottom-0 left-0 right-0 z-20 px-4 pb-6 md:pb-10">
         <DialogBox
           dialogs={npcDialogs}
           speed={30}

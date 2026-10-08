@@ -125,7 +125,7 @@ export const DialogBox = ({
             ? ''
             : !isLastDialog
               ? 'Click para continuar'
-              : 'Bajando a los proyectos…'}
+              : 'Abriendo proyectos…'}
       </motion.p>
     </motion.div>
   );

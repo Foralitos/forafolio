@@ -7,7 +7,6 @@ export const Projects = ({ projects }) => {
   const { isDaytime } = useCDMXTime();
 
   // Dynamic colors based on time
-  const bgColor = isDaytime ? 'bg-gray-50' : 'bg-gray-950';
   const textPrimary = isDaytime ? 'text-gray-900' : 'text-white';
   const textSecondary = isDaytime ? 'text-gray-600' : 'text-gray-400';
   const cardBg = isDaytime ? 'bg-white/95' : 'bg-gray-900/95';
@@ -25,10 +24,8 @@ export const Projects = ({ projects }) => {
   const cornerColor = isDaytime ? 'bg-gray-900' : 'bg-white';
 
   return (
-    <section id="projects" className={`relative py-24 ${bgColor} overflow-hidden transition-colors duration-500`}>
-      {/* Background Elements */}
-      <div className={`absolute inset-0 ${isDaytime ? 'bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100' : 'bg-gradient-to-br from-gray-950 via-gray-900/50 to-gray-950'} -z-10 transition-colors duration-500`} />
-      <div className={`absolute inset-0 ${isDaytime ? 'bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.05)_0%,rgba(99,102,241,0)_100%)]' : 'bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.08)_0%,rgba(99,102,241,0)_100%)]'} transition-opacity duration-500`} />
+    // El fondo lo pone la ventana del escritorio.
+    <section className="relative py-10 md:py-14">
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header - Pixel Art Style */}

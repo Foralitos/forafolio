@@ -17,6 +17,28 @@ body {
   }
 }
 
+/* Tokens del escritorio estilo macOS. Desktop.jsx pone data-theme según la
+   hora de CDMX: de día la compu está en modo claro y de noche en oscuro. Los
+   valores son canales RGB para que Tailwind pueda aplicarles opacidad. */
+[data-theme="day"] {
+  --desk-bar: 246 246 248;
+  --desk-win: 255 255 255;
+  --desk-chrome: 236 236 238;
+  --desk-line: 0 0 0;
+  --desk-fg: 29 29 31;
+  --desk-muted: 110 110 115;
+  color-scheme: light;
+}
+[data-theme="night"] {
+  --desk-bar: 30 30 32;
+  --desk-win: 28 28 30;
+  --desk-chrome: 44 44 46;
+  --desk-line: 255 255 255;
+  --desk-fg: 245 245 247;
+  --desk-muted: 152 152 157;
+  color-scheme: dark;
+}
+
 /* Estilos del contenido renderizado del blog (markdown -> HTML) */
 .prose-blog {
   @apply text-gray-300 leading-relaxed;

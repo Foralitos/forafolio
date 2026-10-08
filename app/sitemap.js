@@ -16,6 +16,9 @@ export default async function sitemap() {
 
   return [
     { url: `${BASE}/`, priority: 1 },
+    { url: `${BASE}/about`, priority: 0.9 },
+    { url: `${BASE}/projects`, priority: 0.9 },
+    { url: `${BASE}/contact`, priority: 0.7 },
     { url: `${BASE}/blog`, priority: 0.8 },
     ...posts.map((p) => ({
       url: `${BASE}/blog/${p.slug}`,
