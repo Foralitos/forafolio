@@ -30,7 +30,7 @@ export function Window({ title, children, bodyClassName = "" }) {
           className={`glass glass-float absolute z-30 flex flex-col overflow-hidden transition-[inset,border-radius,background-color] duration-300 ${
             maximized
               ? "inset-0 rounded-none"
-              : "inset-x-2 bottom-20 top-2 rounded-2xl md:inset-x-32 md:bottom-6 md:top-4 lg:mx-auto lg:max-w-5xl"
+              : "inset-x-2 bottom-20 top-0 rounded-2xl md:inset-x-32 md:bottom-6 lg:mx-auto lg:max-w-5xl"
           }`}
         >
           {/* Barra de título */}

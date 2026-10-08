@@ -64,7 +64,7 @@ export default function Desktop({ children }) {
         <div
           ref={areaRef}
           {...handlers}
-          className="absolute inset-x-0 bottom-0 top-8 select-none"
+          className="absolute inset-x-0 bottom-0 top-14 select-none md:top-16"
         >
           <DesktopIcons />
           {children}

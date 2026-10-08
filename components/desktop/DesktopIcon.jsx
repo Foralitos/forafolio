@@ -78,7 +78,7 @@ export function DesktopIcons() {
       {["left", "right"].map((side) => (
         <nav
           key={side}
-          className={`absolute top-3 hidden flex-col gap-3 md:flex ${
+          className={`absolute top-0 hidden flex-col gap-3 md:flex ${
             side === "left" ? "left-3" : "right-3"
           }`}
         >

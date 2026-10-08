@@ -7,18 +7,19 @@ import { useDesktop } from "./Desktop";
 import { APPS, LINKS } from "./apps";
 import { XLogo } from "./XLogo";
 
-// La barra de menú de macOS: translúcida, 32px, fuente de sistema.
+// La barra de menú: vidrio de macOS, pero flotante y redondeada (despegada
+// del borde con margen), en vez de la franja pegada arriba de la Mac.
 export function MenuBar() {
   const { formattedTime } = useCDMXTime();
   const { openWindow } = useDesktop();
 
   return (
-    <header className="glass absolute inset-x-0 top-0 z-40 flex h-8 items-center justify-between px-3 text-[13px] transition-colors duration-[2000ms] md:px-4">
+    <header className="glass glass-float absolute inset-x-2 top-2 z-40 flex h-10 items-center justify-between rounded-2xl px-3 text-[14px] transition-colors duration-[2000ms] md:inset-x-3 md:top-3 md:px-4">
       <nav className="flex items-center gap-1">
         <Link
           href="/"
           onClick={openWindow}
-          className="rounded px-2 py-0.5 font-semibold hover:bg-desk-line/10"
+          className="rounded-lg px-2 py-0.5 font-semibold hover:bg-desk-line/10"
         >
           Fora
         </Link>
@@ -27,7 +28,7 @@ export function MenuBar() {
             key={app.id}
             href={app.href}
             onClick={openWindow}
-            className="hidden rounded px-2 py-0.5 hover:bg-desk-line/10 md:block"
+            className="hidden rounded-lg px-2 py-0.5 hover:bg-desk-line/10 md:block"
           >
             {app.label}
           </Link>
@@ -40,7 +41,7 @@ export function MenuBar() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="LinkedIn"
-          className="hidden rounded p-1 hover:bg-desk-line/10 sm:block"
+          className="hidden rounded-lg p-1 hover:bg-desk-line/10 sm:block"
         >
           <LinkedinLogo size={15} weight="fill" />
         </a>
@@ -49,7 +50,7 @@ export function MenuBar() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="X"
-          className="hidden rounded p-1 hover:bg-desk-line/10 sm:block"
+          className="hidden rounded-lg p-1 hover:bg-desk-line/10 sm:block"
         >
           <XLogo size={14} />
         </a>
