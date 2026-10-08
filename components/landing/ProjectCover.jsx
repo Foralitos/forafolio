@@ -1,5 +1,7 @@
 "use client";
 
+import { youtubeEmbed } from "@/libs/youtube";
+
 // Portada de un proyecto: el video en loop si hay, si no la imagen, y si no
 // hay ninguna (proyecto recién cargado, sin captura todavía) una portada
 // provisional con degradado y el nombre, en vez de un hueco vacío. El color
@@ -11,7 +13,8 @@ export function tono(texto) {
 }
 
 export function ProjectCover({ project, className = "", autoPlay = true, titleClassName = "text-4xl" }) {
-  if (project.video && autoPlay) {
+  // Un link de YouTube no sirve como portada en loop: ahí manda la imagen.
+  if (project.video && autoPlay && !youtubeEmbed(project.video)) {
     return (
       <video
         src={project.video}

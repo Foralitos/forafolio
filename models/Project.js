@@ -30,6 +30,10 @@ const projectSchema = new mongoose.Schema(
     status: { type: String, enum: PROJECT_STATUSES, default: "live" },
     repoUrl: { type: String, default: "" },
     featured: { type: Boolean, default: false },
+    // Arriba de la página va la portada y el video baja a "Demo". Con esto el
+    // video sube al lugar de la portada (proyectos sin imágenes reales).
+    heroVideo: { type: Boolean, default: false },
+    pitch: { type: String, default: "" }, // link de YouTube a un pitch (con ?t= opcional)
     gallery: { type: [String], default: [] }, // Cloudinary secure_urls
     video: { type: String, default: "" }, // Cloudinary secure_url
   },
@@ -65,6 +69,8 @@ export function toProjectDTO(doc) {
     status: doc.status || "live",
     repoUrl: doc.repoUrl ?? "",
     featured: doc.featured ?? false,
+    heroVideo: doc.heroVideo ?? false,
+    pitch: doc.pitch ?? "",
     gallery: doc.gallery ?? [],
     video: doc.video ?? "",
   };

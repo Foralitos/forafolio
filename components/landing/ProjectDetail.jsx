@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowUpRight, CaretLeft, CaretRight, GithubLogo, X } from 'phosphor-react';
 import { STATUS } from './Projects';
 import { ProjectCover } from './ProjectCover';
+import { youtubeEmbed } from '@/libs/youtube';
 
 // Visor de capturas en grande. Escape lo cierra SIN cerrar la ventana: el
 // escritorio (Desktop.jsx) también escucha Escape en window, así que aquí se
@@ -64,6 +65,34 @@ function Lightbox({ imagenes, indice, onClose, onMove }) {
         </>
       )}
     </motion.div>
+  );
+}
+
+// El video de un proyecto: YouTube embebido o un archivo con controles.
+function Reproductor({ project }) {
+  const embed = youtubeEmbed(project.video);
+  if (embed) {
+    return (
+      <iframe
+        src={embed}
+        title={`${project.title} video`}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        // YouTube rechaza el reproductor si no sabe desde qué sitio se carga
+        // (sale solo "Watch on YouTube").
+        referrerPolicy="strict-origin-when-cross-origin"
+        className="aspect-video w-full bg-black"
+      />
+    );
+  }
+  return (
+    <video
+      src={project.video}
+      poster={project.image || undefined}
+      controls
+      playsInline
+      className="aspect-video w-full bg-black"
+    />
   );
 }
 
@@ -128,19 +157,14 @@ export function ProjectDetail({ project, html }) {
         </div>
       </header>
 
-      {/* Video o portada */}
+      {/* Arriba la portada; el video baja a "Demo", salvo que el proyecto
+          pida el video arriba (heroVideo: no tiene imágenes reales). */}
       <div className="panel mt-8 overflow-hidden rounded-2xl">
-        {project.video ? (
-          <video
-            src={project.video}
-            poster={project.image || undefined}
-            controls
-            playsInline
-            className="aspect-video w-full bg-black"
-          />
+        {project.heroVideo && project.video ? (
+          <Reproductor project={project} />
         ) : (
           <div className="aspect-video w-full">
-            <ProjectCover project={project} titleClassName="text-6xl md:text-8xl" />
+            <ProjectCover project={project} autoPlay={false} titleClassName="text-6xl md:text-8xl" />
           </div>
         )}
       </div>
@@ -162,6 +186,28 @@ export function ProjectDetail({ project, html }) {
           ))}
         </div>
       )}
+
+      {/* Demo y pitch: justo después de la portada, antes de la historia. Si
+          hay los dos van lado a lado; si no hay ninguno, no sale nada. */}
+      {(() => {
+        const videos = [
+          project.video && !project.heroVideo ? { titulo: "Demo", url: project.video } : null,
+          project.pitch ? { titulo: "Pitch", url: project.pitch } : null,
+        ].filter(Boolean);
+        if (videos.length === 0) return null;
+        return (
+          <div className={`mt-10 grid gap-6 ${videos.length > 1 ? "md:grid-cols-2" : ""}`}>
+            {videos.map((v) => (
+              <section key={v.titulo}>
+                <h2 className="text-xl font-semibold tracking-tight">{v.titulo}</h2>
+                <div className="panel mt-3 overflow-hidden rounded-2xl">
+                  <Reproductor project={{ ...project, video: v.url }} />
+                </div>
+              </section>
+            ))}
+          </div>
+        );
+      })()}
 
       {/* Historia + ficha */}
       <div className="mt-12 grid gap-10 md:grid-cols-[1fr_260px]">

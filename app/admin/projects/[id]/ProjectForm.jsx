@@ -175,6 +175,13 @@ export default function ProjectForm({ id, isNew, project }) {
             initial={project?.gallery}
           />
           <MediaUploader name="video" label="Video de cómo funciona" kind="video" initial={project?.video} />
+          <Field
+            label="Pitch en YouTube (opcional)"
+            name="pitch"
+            type="url"
+            defaultValue={project?.pitch}
+            hint="Pega el link con el minuto donde empiezas (…&t=3852s)."
+          />
           <label className="flex items-center gap-2 text-sm text-gray-300">
             <input
               type="checkbox"
@@ -183,6 +190,15 @@ export default function ProjectForm({ id, isNew, project }) {
               className="w-4 h-4 accent-white"
             />
             Destacado (banner grande en Proyectos)
+          </label>
+          <label className="flex items-center gap-2 text-sm text-gray-300">
+            <input
+              type="checkbox"
+              name="heroVideo"
+              defaultChecked={project?.heroVideo ?? false}
+              className="w-4 h-4 accent-white"
+            />
+            Video arriba en vez de la portada (si no tiene imágenes reales)
           </label>
         </Seccion>
 

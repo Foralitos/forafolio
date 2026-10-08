@@ -79,6 +79,8 @@ export async function saveProject(id, _prevState, formData) {
     stack: separarPorComas(formData.get("stack")),
     repoUrl: String(formData.get("repoUrl") ?? "").trim(),
     featured: formData.get("featured") === "on",
+    heroVideo: formData.get("heroVideo") === "on",
+    pitch: String(formData.get("pitch") ?? "").trim(),
     gallery: leerLista(formData.get("gallery")),
     video: String(formData.get("video") ?? "").trim(),
   };
