@@ -1,9 +1,11 @@
 "use client";
 
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useDesktop } from "./Desktop";
 import { APPS } from "./apps";
+import { CELL_H, CELL_W, MARGIN, moverIconos, useIconLayout } from "./useIconLayout";
 
 // Un ícono del escritorio en el modo "Clear" de macOS Tahoe: squircle de
 // vidrio con el glifo en blanco + etiqueta con sombra. El seleccionado solo
@@ -58,35 +60,101 @@ export function DesktopIcon({ app, compact = false }) {
 
   if (app.external) {
     return (
-      <a href={app.href} target="_blank" rel="noopener noreferrer" aria-label={app.label} {...comunes} className={clase}>
+      <a href={app.href} target="_blank" rel="noopener noreferrer" aria-label={app.label} draggable={false} {...comunes} className={clase}>
         {contenido}
       </a>
     );
   }
 
   return (
-    <Link href={app.href} onClick={openWindow} aria-label={app.label} {...comunes} className={clase}>
+    <Link href={app.href} onClick={openWindow} aria-label={app.label} draggable={false} {...comunes} className={clase}>
       {contenido}
     </Link>
   );
 }
 
-// Las dos columnas a los lados de la ventana, solo en pantallas md+.
+// Los íconos del escritorio (solo md+; en celular está el Dock). Cada uno vive
+// en su celda de la cuadrícula (useIconLayout) y se puede arrastrar: si el que
+// agarras está dentro de una selección del cuadro azul, se mueve todo el
+// grupo. Al soltar se alinean a la cuadrícula y el acomodo se guarda en el
+// navegador del visitante.
 export function DesktopIcons() {
+  const layout = useIconLayout();
+  const { areaRef, selectedIcons, selectIcons } = useDesktop();
+  const [arrastre, setArrastre] = useState(null); // { ids, dx, dy }
+  const origen = useRef(null);
+  const recienArrastrado = useRef(false);
+
+  const onPointerDown = (e, id) => {
+    if (e.pointerType !== "mouse" || e.button !== 0) return;
+    origen.current = { x: e.clientX, y: e.clientY, id, capturado: false };
+  };
+
+  const onPointerMove = (e) => {
+    const o = origen.current;
+    if (!o) return;
+    const dx = e.clientX - o.x;
+    const dy = e.clientY - o.y;
+    if (!o.capturado) {
+      // Umbral de 4 px: menos que eso es un clic, no un arrastre.
+      if (Math.hypot(dx, dy) < 4) return;
+      // La captura se pide hasta aquí: si se pidiera en pointerdown, el clic
+      // normal caería en el contenedor y el link nunca se abriría.
+      e.currentTarget.setPointerCapture(e.pointerId);
+      o.capturado = true;
+      const enGrupo = selectedIcons.has(o.id) && selectedIcons.size > 1;
+      o.ids = enGrupo ? [...selectedIcons] : [o.id];
+      if (!enGrupo) selectIcons(new Set([o.id]));
+    }
+    setArrastre({ ids: o.ids, dx, dy });
+  };
+
+  const onPointerUp = (e) => {
+    const o = origen.current;
+    origen.current = null;
+    if (!o?.capturado) return;
+    const area = areaRef.current.getBoundingClientRect();
+    moverIconos(o.ids, e.clientX - o.x, e.clientY - o.y, area.width, area.height);
+    setArrastre(null);
+    // El navegador dispara un click al soltar: ese no debe abrir nada.
+    recienArrastrado.current = true;
+    setTimeout(() => (recienArrastrado.current = false), 0);
+  };
+
+  const onClickCapture = (e) => {
+    if (recienArrastrado.current) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
+
   return (
-    <>
-      {["left", "right"].map((side) => (
-        <nav
-          key={side}
-          className={`absolute top-0 hidden flex-col gap-3 md:flex ${
-            side === "left" ? "left-3" : "right-3"
-          }`}
-        >
-          {APPS.filter((app) => app.side === side).map((app) => (
-            <DesktopIcon key={app.id} app={app} />
-          ))}
-        </nav>
-      ))}
-    </>
+    <div className="hidden md:block">
+      {APPS.filter((app) => app.side).map((app) => {
+        const celda = layout[app.id];
+        const moviendo = arrastre?.ids.includes(app.id);
+        const lado = celda.anchor === "left" ? { left: MARGIN + celda.col * CELL_W } : { right: MARGIN + celda.col * CELL_W };
+        return (
+          <div
+            key={app.id}
+            onPointerDown={(e) => onPointerDown(e, app.id)}
+            onPointerMove={onPointerMove}
+            onPointerUp={onPointerUp}
+            onPointerCancel={onPointerUp}
+            onClickCapture={onClickCapture}
+            onDragStart={(e) => e.preventDefault()}
+            className={`absolute flex justify-center ${moviendo ? "z-[25] opacity-[0.85]" : "z-10 transition-[left,right,top] duration-300 ease-out"}`}
+            style={{
+              ...lado,
+              top: celda.row * CELL_H,
+              width: CELL_W,
+              transform: moviendo ? `translate(${arrastre.dx}px, ${arrastre.dy}px)` : undefined,
+            }}
+          >
+            <DesktopIcon app={app} />
+          </div>
+        );
+      })}
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useCDMXTime } from "@/hooks/useCDMXTime";
 import { Wallpaper } from "./Wallpaper";
@@ -8,12 +8,16 @@ import { MenuBar } from "./MenuBar";
 import { DesktopIcons } from "./DesktopIcon";
 import { Dock } from "./Dock";
 import { useMarquee } from "./useMarquee";
+import { ContextMenu } from "./ContextMenu";
+import { limpiar } from "./useIconLayout";
 
 const DesktopContext = createContext({
   windowOpen: true,
   openWindow: () => {},
   closeWindow: () => {},
   selectedIcons: new Set(),
+  selectIcons: () => {},
+  areaRef: { current: null },
 });
 
 export const useDesktop = () => useContext(DesktopContext);
@@ -33,7 +37,31 @@ export default function Desktop({ children }) {
   // ruta deja de coincidir y la ventana nueva aparece abierta, sin un efecto
   // que haga setState (React 19 lo marca como error).
   const windowOpen = closedAt !== pathname;
-  const { box, selected, handlers } = useMarquee(areaRef);
+  const { box, selected, setSelected, handlers } = useMarquee(areaRef);
+  const [menu, setMenu] = useState(null); // { x, y } del clic derecho
+  const cerrarMenu = useCallback(() => setMenu(null), []);
+
+  // Clic derecho sobre el escritorio vacío (no sobre la ventana ni un ícono).
+  const onContextMenu = (e) => {
+    if (e.target.closest("a, button, section")) return;
+    e.preventDefault();
+    const area = areaRef.current.getBoundingClientRect();
+    setMenu({
+      x: Math.min(e.clientX - area.left, area.width - 190),
+      y: Math.min(e.clientY - area.top, area.height - 90),
+    });
+  };
+
+  const tamañoArea = () => {
+    const area = areaRef.current.getBoundingClientRect();
+    return [area.width, area.height];
+  };
+  const itemsMenu = [
+    { label: "Clean Up", onSelect: () => limpiar(null, ...tamañoArea()) },
+    ...(selected.size > 0
+      ? [{ label: "Clean Up Selection", onSelect: () => limpiar([...selected], ...tamañoArea()) }]
+      : []),
+  ];
 
   // Con la ventana cerrada, Escape no hace nada; abierta, la cierra como ⌘W.
   useEffect(() => {
@@ -49,6 +77,8 @@ export default function Desktop({ children }) {
     openWindow: () => setClosedAt(null),
     closeWindow: () => setClosedAt(pathname),
     selectedIcons: selected,
+    selectIcons: setSelected,
+    areaRef,
   };
 
   return (
@@ -64,6 +94,7 @@ export default function Desktop({ children }) {
         <div
           ref={areaRef}
           {...handlers}
+          onContextMenu={onContextMenu}
           className="absolute inset-x-0 bottom-0 top-14 select-none md:top-16"
         >
           <DesktopIcons />
@@ -75,6 +106,7 @@ export default function Desktop({ children }) {
               style={box}
             />
           )}
+          {menu && <ContextMenu x={menu.x} y={menu.y} items={itemsMenu} onClose={cerrarMenu} />}
         </div>
         <Dock />
       </div>

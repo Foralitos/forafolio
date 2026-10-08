@@ -62,6 +62,7 @@ export function useMarquee(areaRef) {
   return {
     box,
     selected,
+    setSelected,
     handlers: { onPointerDown, onPointerMove, onPointerUp, onPointerCancel: onPointerUp },
   };
 }
