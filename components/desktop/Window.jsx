@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
+import { CaretLeft } from "phosphor-react";
 import { useDesktop } from "./Desktop";
 
 // La ventana estilo macOS. Cada page.js del grupo (desktop) envuelve su
@@ -12,7 +14,9 @@ import { useDesktop } from "./Desktop";
 //   y cerrar son lo mismo). Verde maximiza/restaura.
 // - No se arrastra: siempre aparece centrada.
 // - El scroll vive dentro del cuerpo: el escritorio nunca hace scroll.
-export function Window({ title, children, bodyClassName = "" }) {
+// - backHref (opcional) pone una flecha ‹ junto a los semáforos para volver
+//   de una página interna (un post, un proyecto) a su lista.
+export function Window({ title, children, bodyClassName = "", backHref }) {
   const { windowOpen, closeWindow } = useDesktop();
   const [maximized, setMaximized] = useState(false);
   const toggleMaximize = () => setMaximized((m) => !m);
@@ -48,7 +52,16 @@ export function Window({ title, children, bodyClassName = "" }) {
                 onClick={toggleMaximize}
               />
             </div>
-            <h2 className="pointer-events-none absolute inset-x-0 text-center text-[13px] font-semibold text-desk-fg/70">
+            {backHref && (
+              <Link
+                href={backHref}
+                aria-label="Back"
+                className="relative z-10 ml-4 flex h-7 w-7 items-center justify-center rounded-lg text-desk-fg/60 hover:bg-desk-line/10 hover:text-desk-fg"
+              >
+                <CaretLeft size={16} weight="bold" />
+              </Link>
+            )}
+            <h2 className="pointer-events-none absolute inset-x-0 truncate px-28 text-center text-[13px] font-semibold text-desk-fg/70">
               {title}
             </h2>
           </div>
