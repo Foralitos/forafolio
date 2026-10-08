@@ -124,8 +124,8 @@ export const DialogBox = ({
           : isTyping
             ? ''
             : !isLastDialog
-              ? 'Click para continuar'
-              : 'Abriendo proyectos…'}
+              ? 'Click to continue'
+              : 'Opening projects…'}
       </motion.p>
     </motion.div>
   );

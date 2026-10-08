@@ -3,13 +3,13 @@ import { About } from "@/components/landing/About";
 import { getSEOTags } from "@/libs/seo";
 
 export const metadata = getSEOTags({
-  title: "Sobre mí — Fora",
+  title: "About — Fora",
   canonicalUrlRelative: "/about",
 });
 
 export default function AboutPage() {
   return (
-    <Window title="Sobre mí">
+    <Window title="About">
       <About />
     </Window>
   );

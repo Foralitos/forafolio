@@ -27,6 +27,9 @@ body {
   --desk-line: 0 0 0;
   --desk-fg: 29 29 31;
   --desk-muted: 110 110 115;
+  --glass-alpha: 0.55;
+  --glass-highlight: 0.75;
+  --glass-edge: 0.35;
   color-scheme: light;
 }
 [data-theme="night"] {
@@ -36,7 +39,42 @@ body {
   --desk-line: 255 255 255;
   --desk-fg: 245 245 247;
   --desk-muted: 152 152 157;
+  --glass-alpha: 0.55;
+  --glass-highlight: 0.14;
+  --glass-edge: 0.08;
   color-scheme: dark;
+}
+
+/* Vidrio estilo macOS Tahoe: translúcido, con blur y saturación para que el
+   wallpaper se asome con su color, más un brillo fino en el canto superior.
+   Lo usan la ventana, la barra de menú y el Dock. */
+.glass {
+  background-color: rgb(var(--desk-win) / var(--glass-alpha));
+  -webkit-backdrop-filter: blur(40px) saturate(1.8);
+  backdrop-filter: blur(40px) saturate(1.8);
+  box-shadow:
+    inset 0 1px 0 0 rgb(255 255 255 / var(--glass-highlight)),
+    inset 0 0 0 1px rgb(255 255 255 / var(--glass-edge));
+}
+
+/* Lo que flota sobre el escritorio (la ventana) suma su sombra larga al
+   brillo: ambas viven en box-shadow, así que van juntas aquí y no como
+   utilidades de Tailwind, que se pisarían con .glass. */
+.glass-float {
+  box-shadow:
+    inset 0 1px 0 0 rgb(255 255 255 / var(--glass-highlight)),
+    inset 0 0 0 1px rgb(255 255 255 / var(--glass-edge)),
+    0 0 0 0.5px rgb(0 0 0 / 0.25),
+    0 30px 80px -20px rgb(0 0 0 / 0.5);
+}
+
+/* "Papel" dentro del vidrio: las tarjetas van casi sólidas para que el texto
+   siempre se lea, sin importar qué parte del wallpaper quede detrás. */
+.panel {
+  background-color: rgb(var(--desk-win) / 0.82);
+  box-shadow:
+    0 0 0 1px rgb(var(--desk-line) / 0.06),
+    0 1px 2px 0 rgb(0 0 0 / 0.06);
 }
 
 /* Estilos del contenido renderizado del blog (markdown -> HTML) */

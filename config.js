@@ -3,7 +3,7 @@
 const config = {
   appName: "Fora",
   appDescription:
-    "Portafolio de Fora — founder y dev en Chihuahua. Proyectos, blog y notas de construcción.",
+    "Fora Delgado — founder and developer from Chihuahua, Mexico. Projects, blog and build notes.",
   // Sin https:// ni slash final. El apex foradelgado.tech redirige a www, así
   // que el canónico es el www. forafolio.vercel.app sigue respondiendo pero es
   // el subdominio de Vercel, no la dirección pública.

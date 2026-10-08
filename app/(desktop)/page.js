@@ -3,7 +3,7 @@ import { Welcome } from "@/components/desktop/Welcome";
 
 export default function Home() {
   return (
-    <Window title="Bienvenido">
+    <Window title="Welcome">
       <Welcome />
     </Window>
   );

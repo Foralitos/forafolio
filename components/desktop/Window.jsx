@@ -27,28 +27,28 @@ export function Window({ title, children, bodyClassName = "" }) {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.96 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
-          className={`absolute z-30 flex flex-col overflow-hidden border border-desk-line/10 bg-desk-win/95 shadow-2xl shadow-black/40 backdrop-blur-2xl transition-[inset,border-radius,background-color] duration-300 ${
+          className={`glass glass-float absolute z-30 flex flex-col overflow-hidden transition-[inset,border-radius,background-color] duration-300 ${
             maximized
               ? "inset-0 rounded-none"
-              : "inset-x-2 bottom-20 top-2 rounded-xl md:inset-x-32 md:bottom-6 md:top-4 lg:mx-auto lg:max-w-5xl"
+              : "inset-x-2 bottom-20 top-2 rounded-2xl md:inset-x-32 md:bottom-6 md:top-4 lg:mx-auto lg:max-w-5xl"
           }`}
         >
           {/* Barra de título */}
           <div
             onDoubleClick={toggleMaximize}
-            className="relative flex h-10 shrink-0 select-none items-center border-b border-desk-line/10 bg-desk-chrome/80 px-4"
+            className="relative flex h-11 shrink-0 select-none items-center border-b border-desk-line/[0.06] px-4"
           >
             <div className="group/lights flex items-center gap-2">
-              <Semaforo color="bg-[#ff5f57]" label="Cerrar" simbolo="×" onClick={closeWindow} />
-              <Semaforo color="bg-[#febc2e]" label="Minimizar" simbolo="−" onClick={closeWindow} />
+              <Semaforo color="bg-[#ff5f57]" label="Close" simbolo="×" onClick={closeWindow} />
+              <Semaforo color="bg-[#febc2e]" label="Minimize" simbolo="−" onClick={closeWindow} />
               <Semaforo
                 color="bg-[#28c840]"
-                label={maximized ? "Restaurar" : "Maximizar"}
+                label={maximized ? "Restore" : "Maximize"}
                 simbolo="+"
                 onClick={toggleMaximize}
               />
             </div>
-            <h2 className="pointer-events-none absolute inset-x-0 text-center text-[13px] font-semibold text-desk-muted">
+            <h2 className="pointer-events-none absolute inset-x-0 text-center text-[13px] font-semibold text-desk-fg/70">
               {title}
             </h2>
           </div>

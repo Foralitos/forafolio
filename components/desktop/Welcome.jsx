@@ -12,7 +12,7 @@ export function Welcome() {
   return (
     <div>
       <div
-        className="relative flex h-56 items-end bg-cover bg-center md:h-72"
+        className="relative mx-3 mt-3 flex h-56 items-end overflow-hidden rounded-xl bg-cover bg-center md:mx-4 md:mt-4 md:h-72"
         style={{
           backgroundImage: `url(${isDaytime ? "/ForaDay.png" : "/ForaNight.png"})`,
           imageRendering: "pixelated",
@@ -35,22 +35,22 @@ export function Welcome() {
       </div>
 
       <div className="px-6 py-8 md:px-10">
-        <p className="max-w-xl text-[15px] leading-relaxed text-desk-muted">
-          Bienvenido a mi compu. Abre cualquier ícono del escritorio para
-          explorar, o empieza por aquí:
+        <p className="max-w-xl text-[15px] leading-relaxed text-desk-fg/75">
+          Welcome to my computer. Open any icon on the desktop to look around,
+          or start here:
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
             href="/about"
-            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-500"
+            className="rounded-full bg-blue-500 px-4 py-1.5 text-[13px] font-medium text-white shadow-sm hover:bg-blue-600"
           >
-            Sobre mí
+            About me
           </Link>
           <Link
             href="/projects"
-            className="rounded-lg border border-desk-line/15 bg-desk-chrome px-4 py-2 text-sm font-medium hover:bg-desk-line/10"
+            className="rounded-full bg-desk-line/10 px-4 py-1.5 text-[13px] font-medium hover:bg-desk-line/15"
           >
-            Ver proyectos
+            See projects
           </Link>
         </div>
       </div>

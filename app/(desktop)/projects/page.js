@@ -4,7 +4,7 @@ import { getPublishedProjects } from "@/models/Project";
 import { getSEOTags } from "@/libs/seo";
 
 export const metadata = getSEOTags({
-  title: "Proyectos — Fora",
+  title: "Projects — Fora",
   canonicalUrlRelative: "/projects",
 });
 
@@ -19,7 +19,7 @@ export default async function ProjectsPage() {
   }
 
   return (
-    <Window title="Proyectos">
+    <Window title="Projects">
       <Projects projects={projects} />
     </Window>
   );

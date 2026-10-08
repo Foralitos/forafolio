@@ -1,134 +1,75 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { useCDMXTime } from '@/hooks/useCDMXTime';
+import { ArrowUpRight } from 'phosphor-react';
 
+// Grilla de proyectos dentro de la ventana de vidrio. Las tarjetas son "papel"
+// (.panel en globals.css): casi sólidas, para que se lean sobre cualquier
+// parte del wallpaper. Los colores salen de los tokens del escritorio, así que
+// el modo día/noche ya no necesita clases condicionales aquí.
 export const Projects = ({ projects }) => {
-  const { isDaytime } = useCDMXTime();
-
-  // Dynamic colors based on time
-  const textPrimary = isDaytime ? 'text-gray-900' : 'text-white';
-  const textSecondary = isDaytime ? 'text-gray-600' : 'text-gray-400';
-  const cardBg = isDaytime ? 'bg-white/95' : 'bg-gray-900/95';
-  const cardBorder = isDaytime ? 'border-gray-900' : 'border-white';
-  const innerBorder = isDaytime ? 'border-gray-300' : 'border-gray-700';
-  const imageBorder = isDaytime ? 'border-gray-900' : 'border-white';
-  const tagBorder = isDaytime ? 'border-gray-300' : 'border-gray-600';
-  const tagBg = isDaytime ? 'bg-gray-100/50' : 'bg-gray-800/50';
-  const tagText = isDaytime ? 'text-gray-700' : 'text-gray-300';
-  const buttonBorder = isDaytime ? 'border-gray-900' : 'border-white';
-  const buttonBg = isDaytime ? 'bg-gray-900/10' : 'bg-white/10';
-  const buttonHoverBg = isDaytime ? 'hover:bg-gray-900' : 'hover:bg-white';
-  const buttonHoverText = isDaytime ? 'hover:text-white' : 'hover:text-gray-900';
-  const glowColor = isDaytime ? 'bg-gray-900/20' : 'bg-white/20';
-  const cornerColor = isDaytime ? 'bg-gray-900' : 'bg-white';
-
   return (
-    // El fondo lo pone la ventana del escritorio.
-    <section className="relative py-10 md:py-14">
+    <section className="px-5 py-8 md:px-8 md:py-10">
+      <header className="mb-8">
+        <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">Projects</h1>
+        <p className="mt-1 text-[15px] text-desk-fg/65">
+          A few things I&apos;ve built and shipped.
+        </p>
+      </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header - Pixel Art Style */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
-          <h2 className={`font-pixel text-2xl md:text-3xl ${textPrimary} mb-6 tracking-wider transition-colors duration-500`}>
-            MY PROJECTS
-          </h2>
-          <div className={`w-full max-w-md mx-auto h-1 ${isDaytime ? 'bg-gray-900' : 'bg-white'} mb-6 transition-colors duration-500`} />
-          <p className={`${textSecondary} max-w-2xl mx-auto text-sm md:text-base transition-colors duration-500`}>
-            A selection of my best projects, each representing a unique challenge and an innovative solution.
-          </p>
-        </motion.div>
-
-        {/* Projects Grid - Pixel Art Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {projects.length === 0 ? (
+        <p className="text-[15px] text-desk-fg/60">Nothing here yet.</p>
+      ) : (
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative h-full"
+            <motion.a
+              key={project.liveUrl || index}
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
+              className="panel group flex flex-col overflow-hidden rounded-2xl transition-transform duration-200 hover:-translate-y-0.5"
             >
-              {/* Pixel Art Card */}
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.2 }}
-                className="relative h-full"
-              >
-                {/* Card with pixel art borders */}
-                <div className={`relative ${cardBg} backdrop-blur-sm border-4 ${cardBorder} shadow-2xl h-full transition-colors duration-500`}>
-                  {/* Inner border */}
-                  <div className={`border-2 ${innerBorder} p-4 md:p-6 h-full flex flex-col transition-colors duration-500`}>
-                    {/* Image Container */}
-                    <div className={`relative aspect-[4/3] border-2 ${imageBorder} mb-4 overflow-hidden ${isDaytime ? 'bg-gray-100' : 'bg-gray-800'} transition-colors duration-500`}>
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover"
-                        style={{ imageRendering: 'pixelated' }}
-                      />
-                    </div>
+              <div className="aspect-[16/10] overflow-hidden bg-desk-line/5">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                />
+              </div>
 
-                    {/* Title */}
-                    <h3 className={`font-pixel ${textPrimary} text-sm md:text-base mb-3 tracking-wide transition-colors duration-500`}>
-                      {project.title.toUpperCase()}
-                    </h3>
-
-                    {/* Description */}
-                    <p className={`${textSecondary} text-xs md:text-sm leading-relaxed mb-4 flex-grow transition-colors duration-500`}>
-                      {project.description}
-                    </p>
-
-                    {/* Tags - Retro Style */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tags.map((tag, tagIndex) => (
-                        <span
-                          key={tagIndex}
-                          className={`px-2 py-1 border-2 ${tagBorder} ${tagBg} ${tagText} text-xs font-mono transition-colors duration-500`}
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* CTA Button - Arcade Style */}
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block w-full"
-                    >
-                      <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className={`border-2 ${buttonBorder} ${buttonBg} ${buttonHoverBg} ${buttonHoverText} ${textPrimary} text-center py-2 transition-colors duration-200`}
-                      >
-                        <span className="font-pixel text-xs md:text-sm">▶ VIEW PROJECT</span>
-                      </motion.div>
-                    </a>
-                  </div>
+              <div className="flex flex-1 flex-col p-4">
+                <div className="flex items-start justify-between gap-2">
+                  <h2 className="text-[15px] font-semibold leading-snug">{project.title}</h2>
+                  <ArrowUpRight
+                    size={16}
+                    weight="bold"
+                    className="mt-0.5 shrink-0 text-desk-fg/40 transition-colors group-hover:text-blue-500"
+                  />
                 </div>
-
-                {/* Corner decorations */}
-                <div className={`absolute -top-1 -left-1 w-4 h-4 ${cornerColor} transition-colors duration-500`} />
-                <div className={`absolute -top-1 -right-1 w-4 h-4 ${cornerColor} transition-colors duration-500`} />
-                <div className={`absolute -bottom-1 -left-1 w-4 h-4 ${cornerColor} transition-colors duration-500`} />
-                <div className={`absolute -bottom-1 -right-1 w-4 h-4 ${cornerColor} transition-colors duration-500`} />
-
-                {/* Pixel glow effect on hover */}
-                <div className={`absolute -inset-2 ${glowColor} opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300 -z-10`} />
-              </motion.div>
-            </motion.div>
+                <p className="mt-1.5 line-clamp-3 flex-1 text-[13px] leading-relaxed text-desk-fg/65">
+                  {project.description}
+                </p>
+                {project.tags?.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full bg-desk-line/[0.07] px-2 py-0.5 text-[11px] font-medium text-desk-fg/70"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </motion.a>
           ))}
         </div>
-      </div>
+      )}
     </section>
   );
 };
