@@ -157,6 +157,7 @@ export default function ProjectForm({ id, isNew, project }) {
                 <option value="live">Live</option>
                 <option value="paused">Paused</option>
                 <option value="archived">Archived</option>
+                <option value="dead">Dead (solo Papelera)</option>
               </select>
             </div>
           </div>

@@ -15,7 +15,6 @@ import {
 //
 // - href interno → abre su ventana dentro del escritorio.
 // - external → sale del sitio en otra pestaña.
-// - href null → ícono decorativo (la Papelera, por ahora).
 export const APPS = [
   { id: "home", label: "Home", href: "/", Icon: House, side: "left" },
   { id: "about", label: "About", href: "/about", Icon: User, side: "left", menu: true },
@@ -31,7 +30,7 @@ export const APPS = [
     side: "right",
     external: true,
   },
-  { id: "trash", label: "Trash", href: null, Icon: Trash, side: "right" },
+  { id: "trash", label: "Trash", href: "/trash", Icon: Trash, side: "right" },
 ];
 
 export const LINKS = {

@@ -3,7 +3,9 @@ import mongoose from "mongoose";
 import connectMongo from "@/libs/mongoose";
 import { slugify } from "@/libs/slug";
 
-export const PROJECT_STATUSES = ["live", "paused", "archived"];
+// "dead" no es un proyecto de Projects que se mató: son proyectos aparte que
+// nunca salen en Projects y viven solo en la Papelera.
+export const PROJECT_STATUSES = ["live", "paused", "archived", "dead"];
 
 // En `yarn dev` el sitio también muestra los proyectos ocultos, para revisar
 // cómo se ven antes de publicarlos. En producción solo salen los publicados.
@@ -78,7 +80,16 @@ export function toProjectDTO(doc) {
 
 export async function getPublishedProjects() {
   await connectMongo();
-  const docs = await Project.find(VISIBLES)
+  const docs = await Project.find({ ...VISIBLES, status: { $ne: "dead" } })
+    .sort({ order: 1, createdAt: -1 })
+    .lean();
+  return docs.map(toProjectDTO);
+}
+
+// Los de la Papelera.
+export async function getDeadProjects() {
+  await connectMongo();
+  const docs = await Project.find({ ...VISIBLES, status: "dead" })
     .sort({ order: 1, createdAt: -1 })
     .lean();
   return docs.map(toProjectDTO);

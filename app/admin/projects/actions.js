@@ -22,6 +22,7 @@ function revalidar(slug) {
   revalidatePath("/admin/projects");
   revalidatePath("/");
   revalidatePath("/projects");
+  revalidatePath("/trash");
   if (slug) revalidatePath(`/projects/${slug}`);
 }
 
