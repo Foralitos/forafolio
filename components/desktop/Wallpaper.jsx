@@ -2,15 +2,18 @@
 
 import ReactDOM from "react-dom";
 
-const DIA = "/ForaDay.png";
-const NOCHE = "/ForaNight.png";
+const DIA = "/ForaDay.webp";
+const NOCHE = "/ForaNight.webp";
 
 // Los dos fondos van apilados y se cruzan por opacidad: cuando el reloj de
 // CDMX pasa de las 6:00 o de las 18:00, el día se funde con la noche en vez de
-// cambiar de golpe.
+// cambiar de golpe. Solo se precarga el que toca según la hora (que ya viene
+// del servidor); el otro baja después sin competir con la primera pintura.
 export function Wallpaper({ isDaytime }) {
-  ReactDOM.preload(DIA, { as: "image" });
-  ReactDOM.preload(NOCHE, { as: "image" });
+  ReactDOM.preload(isDaytime ? DIA : NOCHE, {
+    as: "image",
+    fetchPriority: "high",
+  });
 
   return (
     <div className="absolute inset-0" aria-hidden>

@@ -73,7 +73,7 @@ Vercel corta cualquier request body en 4.5 MB, así que el límite real es menor
 El sitio público y el admin leen la misma data. Publicar un post también revalida `/sitemap.xml`, que se prerenderiza en build.
 
 ### Los `<img>` son deliberados
-Los fondos (`ForaDay.png` y compañía) pesan 2–3 MB y se cargan como `background-image` con `ReactDOM.preload`. ESLint avisa que use `next/image`; se dejó así para que la migración fuera 1:1 y cualquier diferencia visual delatara un bug. **Convertirlos a `next/image` + WebP/AVIF es la mejora de performance más grande disponible** — pero es un cambio de diseño, no de migración.
+Los fondos (`ForaDay.webp`, `ForaNight.webp`) son WebP calidad 85 (~350 KB c/u; antes PNG de 3 MB) y se cargan como `background-image`. Solo se precarga el que toca según la hora de CDMX. ESLint avisa que use `next/image`; se dejó como `background-image` por el crossfade día/noche.
 
 ### `imageRendering: 'pixelated'`
 Todas las imágenes del landing lo llevan. Es la estética, no un descuido.
