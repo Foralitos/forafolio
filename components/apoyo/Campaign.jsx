@@ -16,6 +16,10 @@ export default function Campaign({ campaign, raised, backers, days, thanks }) {
   const toastTimer = useRef(null);
 
   const pct = Math.min(100, (raised / goal) * 100);
+  // Con poquito recaudado, "0%" y una barra vacía se ven como si nada hubiera
+  // pasado: se muestra "<1%" y un trazo mínimo.
+  const pctLabel = raised > 0 && pct < 1 ? "<1%" : `${Math.round(pct)}%`;
+  const barWidth = raised > 0 ? Math.max(pct, 1.5) : 0;
   const breakdownTotal = breakdown.reduce((s, b) => s + b.amount, 0);
   const closed = days === 0;
 
@@ -94,6 +98,8 @@ export default function Campaign({ campaign, raised, backers, days, thanks }) {
           aria-label="Meta de recaudación"
           className="grid gap-[18px] rounded-[14px] bg-white p-[22px] shadow-[0_1px_2px_rgba(0,0,0,.04),0_8px_30px_-12px_rgba(0,0,0,.18),inset_0_0_0_1px_rgba(0,0,0,.06)]"
         >
+          <Countdown days={days} />
+
           <div className="grid gap-1.5">
             <div className="text-[clamp(32px,3.4vw,42px)] font-bold leading-none tracking-[-0.02em] tabular-nums">
               {usd(raised)}
@@ -114,7 +120,7 @@ export default function Campaign({ campaign, raised, backers, days, thanks }) {
               <div
                 className="absolute inset-y-0 left-0 transition-[width] duration-[1400ms] ease-[cubic-bezier(.2,.8,.2,1)] after:absolute after:inset-y-0 after:right-0 after:w-1.5 after:bg-white/85 motion-reduce:transition-none"
                 style={{
-                  width: `${pct}%`,
+                  width: `${barWidth}%`,
                   background:
                     "repeating-linear-gradient(90deg,#007aff 0 10px,#3395ff 10px 12px)",
                 }}
@@ -127,13 +133,9 @@ export default function Campaign({ campaign, raised, backers, days, thanks }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-2.5">
-            <Stat value={`${Math.round(pct)}%`} label="de la meta" />
-            <Stat value={backers} label="personas" />
-            <Stat
-              value={days}
-              label={days === 0 ? "cerró el 15 dic" : `${days === 1 ? "día" : "días"} · cierra 15 dic`}
-            />
+          <div className="grid grid-cols-2 gap-2.5">
+            <Stat value={pctLabel} label="de la meta" />
+            <Stat value={backers} label={backers === 1 ? "persona ha apoyado" : "personas han apoyado"} />
           </div>
 
           <div className="grid grid-cols-4 gap-2">
@@ -346,6 +348,32 @@ function ThanksModal({ amount, onClose, onCopied }) {
           <br />
           <span className="font-semibold text-[#1d1d1f]">Fora</span>
         </p>
+      </div>
+    </div>
+  );
+}
+
+// El tiempo que queda va arriba de la tarjeta y en grande: es lo que empuja a
+// apoyar hoy y no "luego".
+function Countdown({ days }) {
+  if (days === 0) {
+    return (
+      <div className="rounded-xl bg-black/[0.05] px-4 py-3.5 text-center">
+        <div className="text-[22px] font-bold tracking-tight">La campaña cerró</div>
+        <div className="text-sm text-[#6e6e73]">Cerró el 15 de diciembre. Gracias a todos.</div>
+      </div>
+    );
+  }
+  return (
+    <div className="flex items-center gap-4 rounded-xl bg-[#007aff]/[0.09] px-4 py-3.5">
+      <div className="text-[44px] font-bold leading-none tracking-[-0.03em] text-[#007aff] tabular-nums">
+        {days}
+      </div>
+      <div className="min-w-0">
+        <div className="text-[17px] font-bold leading-tight tracking-tight">
+          {days === 1 ? "Queda 1 día" : `Quedan ${days} días`}
+        </div>
+        <div className="text-sm text-[#6e6e73]">para apoyar · cierra el 15 de diciembre</div>
       </div>
     </div>
   );
