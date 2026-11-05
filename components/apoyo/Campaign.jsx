@@ -8,7 +8,7 @@ const usd = (n) => "$" + n.toLocaleString("en-US");
 // Checkout por el monto elegido (app/api/apoyo/checkout) y redirige ahí; el
 // total llega del servidor, que lo suma de los aportes pagados.
 export default function Campaign({ campaign, raised, backers, days, thanks }) {
-  const { goal, amounts, defaultAmount, facts, breakdown, videoUrl, minAmount, maxAmount } = campaign;
+  const { goal, amounts, defaultAmount, facts, uses, videoUrl, minAmount, maxAmount } = campaign;
   const [pick, setPick] = useState(defaultAmount);
   const [custom, setCustom] = useState("");
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,6 @@ export default function Campaign({ campaign, raised, backers, days, thanks }) {
   // pasado: se muestra "<1%" y un trazo mínimo.
   const pctLabel = raised > 0 && pct < 1 ? "<1%" : `${Math.round(pct)}%`;
   const barWidth = raised > 0 ? Math.max(pct, 1.5) : 0;
-  const breakdownTotal = breakdown.reduce((s, b) => s + b.amount, 0);
   const closed = days === 0;
 
   useEffect(() => () => clearTimeout(toastTimer.current), []);
@@ -219,29 +218,15 @@ export default function Campaign({ campaign, raised, backers, days, thanks }) {
         </div>
 
         <div>
-          <h2 className="mb-2.5 text-[19px] font-bold tracking-tight">A dónde va cada dólar</h2>
-          <div className="grid gap-3">
-            {breakdown.map((b, i) => (
-              <div key={b.label} className="grid gap-1.5">
-                <div className="flex justify-between text-sm">
-                  <span>{b.label}</span>
-                  <b className="tabular-nums">{usd(b.amount)}</b>
-                </div>
-                <div className="h-2 overflow-hidden rounded-[3px] bg-black/[0.08]">
-                  <i
-                    className="block h-full bg-[#007aff]"
-                    style={{
-                      width: `${(b.amount / breakdownTotal) * 100}%`,
-                      opacity: [1, 0.55, 0.28][i] ?? 0.28,
-                    }}
-                  />
-                </div>
-              </div>
+          <h2 className="mb-2.5 text-[19px] font-bold tracking-tight">A qué va tu apoyo</h2>
+          <ul className="grid gap-2.5">
+            {uses.map((u) => (
+              <li key={u} className="flex items-start gap-3 text-[15px] leading-snug">
+                <span className="mt-[7px] h-2 w-2 shrink-0 rounded-full bg-[#007aff]" aria-hidden="true" />
+                <span>{u}</span>
+              </li>
             ))}
-            <small className="text-xs text-[#6e6e73]">
-              Montos estimados. Si sobra algo, va al vuelo.
-            </small>
-          </div>
+          </ul>
         </div>
       </section>
 

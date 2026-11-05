@@ -20,11 +20,12 @@ export const CAMPAIGN = {
     ["Fecha límite para juntar", "15 de diciembre de 2026"],
     ["Programa", "Enero 2027"],
   ],
-  // Montos estimados; ajustar cuando se confirme el costo con TrepCamp.
-  breakdown: [
-    { label: "Matrícula (el 50% restante)", amount: 1250 },
-    { label: "Hospedaje en Madrid", amount: 800 },
-    { label: "Transporte y comida", amount: 100 },
+  // A qué se destina lo que se junte, sin montos.
+  uses: [
+    "La otra mitad de la matrícula del programa",
+    "El vuelo a Madrid",
+    "Hospedaje durante la semana del programa",
+    "Transporte y comida allá",
   ],
 };
 
