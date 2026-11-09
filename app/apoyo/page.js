@@ -7,7 +7,7 @@ import Campaign from "@/components/apoyo/Campaign";
 export const metadata = getSEOTags({
   title: "Fora a Madrid — Apoyo",
   description:
-    "Me gané media beca para TrepCamp Madrid. Ayúdame a juntar la otra mitad antes del 15 de diciembre.",
+    "Me gané una beca para TrepCamp Madrid que me cubre la matrícula. Ayúdame a juntar para el viaje antes del 15 de diciembre.",
   canonicalUrlRelative: "/apoyo",
 });
 

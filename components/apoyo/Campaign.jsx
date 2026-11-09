@@ -83,11 +83,11 @@ export default function Campaign({ campaign, raised, backers, days, thanks }) {
           TrepCamp Experience · Madrid
         </p>
         <h1 className="text-balance text-[clamp(30px,4vw,44px)] font-bold leading-[1.08] tracking-[-0.025em]">
-          Me gané media beca para Madrid. ¿Me ayudas con la otra mitad?
+          Me gané una beca para Madrid. ¿Me ayudas con el viaje?
         </h1>
         <p className="max-w-[62ch] text-[15.5px] leading-relaxed text-[#6e6e73]">
-          La Iberoamerican Technology Foundation me seleccionó para la beca parcial de TrepCamp.
-          Cubre el 50% de la matrícula. Con lo que junte aquí cierro la diferencia.
+          La Iberoamerican Technology Foundation me seleccionó para la beca de TrepCamp, que me
+          cubre la matrícula. Lo que junte aquí es para el vuelo, el hospedaje y la comida allá.
         </p>
       </header>
 
