@@ -19,7 +19,6 @@ export const CAMPAIGN = {
     "https://res.cloudinary.com/dcixxtcaj/video/upload/so_1,w_720/v1794232215/forafolio/apoyo-trepcamp.jpg",
   // A qué se destina lo que se junte, sin montos.
   uses: [
-    "La otra mitad de la matrícula del programa",
     "El vuelo a Madrid",
     "Hospedaje durante la semana del programa",
     "Transporte y comida allá",

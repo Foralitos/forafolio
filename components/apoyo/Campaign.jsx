@@ -380,7 +380,7 @@ function Video({ url, poster, onPlaceholder }) {
         controls
         playsInline
         preload="metadata"
-        className="mx-auto aspect-[9/16] w-full max-w-[360px] rounded-[14px] bg-black object-cover"
+        className="mx-auto aspect-[9/16] w-full max-w-[360px] rounded-[14px] bg-black object-contain"
       />
     );
   }
