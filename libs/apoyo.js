@@ -11,15 +11,12 @@ export const CAMPAIGN = {
   defaultAmount: 25,
   minAmount: 1,
   maxAmount: 5000,
-  // URL del video (MP4). Mientras sea null se muestra el póster.
-  videoUrl: null,
-  facts: [
-    ["Beca", "50% de la matrícula"],
-    ["Sede", "Madrid, España"],
-    ["Track", "Sports Business"],
-    ["Fecha límite para juntar", "15 de diciembre de 2026"],
-    ["Programa", "Enero 2027"],
-  ],
+  // Video vertical (9:16) en Cloudinary, comprimido a 720x1280. El póster es
+  // un frame del mismo video que Cloudinary genera al cambiar la extensión.
+  // Si videoUrl es null se muestra el póster de "Video próximamente".
+  videoUrl: "https://res.cloudinary.com/dcixxtcaj/video/upload/v1794232215/forafolio/apoyo-trepcamp.mp4",
+  videoPoster:
+    "https://res.cloudinary.com/dcixxtcaj/video/upload/so_1,w_720/v1794232215/forafolio/apoyo-trepcamp.jpg",
   // A qué se destina lo que se junte, sin montos.
   uses: [
     "La otra mitad de la matrícula del programa",

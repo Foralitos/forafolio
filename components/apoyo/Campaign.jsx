@@ -8,7 +8,8 @@ const usd = (n) => "$" + n.toLocaleString("en-US");
 // Checkout por el monto elegido (app/api/apoyo/checkout) y redirige ahí; el
 // total llega del servidor, que lo suma de los aportes pagados.
 export default function Campaign({ campaign, raised, backers, days, thanks }) {
-  const { goal, amounts, defaultAmount, facts, uses, videoUrl, minAmount, maxAmount } = campaign;
+  const { goal, amounts, defaultAmount, uses, videoUrl, videoPoster, minAmount, maxAmount } =
+    campaign;
   const [pick, setPick] = useState(defaultAmount);
   const [custom, setCustom] = useState("");
   const [loading, setLoading] = useState(false);
@@ -90,8 +91,14 @@ export default function Campaign({ campaign, raised, backers, days, thanks }) {
         </p>
       </header>
 
-      <div className="mt-7 grid items-start gap-[22px] md:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]">
-        <Video url={videoUrl} onPlaceholder={() => showToast("Aquí va el video.")} />
+      {/* Video vertical pegado a la izquierda y tarjeta a la derecha, alineados
+          con los bordes del header; el aire queda entre los dos. */}
+      <div className="mt-7 grid items-start gap-[22px] md:grid-cols-[360px_minmax(0,440px)] md:justify-between">
+        <Video
+          url={videoUrl}
+          poster={videoPoster}
+          onPlaceholder={() => showToast("Aquí va el video.")}
+        />
 
         <aside
           aria-label="Meta de recaudación"
@@ -204,17 +211,6 @@ export default function Campaign({ campaign, raised, backers, days, thanks }) {
             partidos para coaches y clubes. Quiero regresar con contactos del deporte en Europa y
             con el producto más afilado.
           </p>
-          <ul className="mt-3.5 border-t border-black/[0.08]">
-            {facts.map(([k, v]) => (
-              <li
-                key={k}
-                className="flex justify-between gap-4 border-b border-black/[0.08] py-2.5 text-sm"
-              >
-                <span className="text-[#6e6e73]">{k}</span>
-                <span className="text-right font-semibold">{v}</span>
-              </li>
-            ))}
-          </ul>
         </div>
 
         <div>
@@ -374,15 +370,17 @@ function Stat({ value, label }) {
 }
 
 // Con video real se usa <video>; mientras no hay, un póster con botón de play.
-function Video({ url, onPlaceholder }) {
+// Vertical (9:16): en celular se topa a 360px para no comerse toda la pantalla.
+function Video({ url, poster, onPlaceholder }) {
   if (url) {
     return (
       <video
         src={url}
+        poster={poster || undefined}
         controls
         playsInline
         preload="metadata"
-        className="aspect-video w-full max-w-full rounded-[14px] bg-black"
+        className="mx-auto aspect-[9/16] w-full max-w-[360px] rounded-[14px] bg-black object-cover"
       />
     );
   }
@@ -391,7 +389,7 @@ function Video({ url, onPlaceholder }) {
       type="button"
       aria-label="Reproducir video"
       onClick={onPlaceholder}
-      className="group relative grid aspect-video w-full max-w-full place-items-center overflow-hidden rounded-[14px] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-[#007aff]"
+      className="group relative mx-auto grid aspect-[9/16] w-full max-w-[360px] place-items-center overflow-hidden rounded-[14px] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-[#007aff]"
       style={{
         background:
           "radial-gradient(90% 80% at 25% 20%,#1d5fd1 0,transparent 60%),radial-gradient(70% 70% at 85% 90%,#0a84ff 0,transparent 55%),#141a2e",
