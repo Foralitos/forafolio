@@ -4,10 +4,10 @@ const config = {
   appName: "Fora",
   appDescription:
     "Fora Delgado — founder and developer from Chihuahua, Mexico. Projects, blog and build notes.",
-  // Sin https:// ni slash final. El apex foradelgado.tech redirige a www, así
+  // Sin https:// ni slash final. El apex foradelgado.com redirige a www, así
   // que el canónico es el www. forafolio.vercel.app sigue respondiendo pero es
   // el subdominio de Vercel, no la dirección pública.
-  domainName: "www.foradelgado.tech",
+  domainName: "www.foradelgado.com",
   resend: {
     // Remitente de cualquier correo transaccional. Sin dominio verificado en
     // Resend, el único `from` que funciona es este de prueba.
