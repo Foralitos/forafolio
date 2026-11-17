@@ -74,7 +74,12 @@ export default function Desktop({ children }) {
 
   const value = {
     windowOpen,
-    openWindow: () => setClosedAt(null),
+    // Con href de otra ruta no hace nada: la navegación ya abre la ventana
+    // nueva. Reabrir aquí revivía la ventana de la ruta actual mientras
+    // cargaba la siguiente (parpadeo).
+    openWindow: (href) => {
+      if (typeof href !== "string" || href === pathname) setClosedAt(null);
+    },
     closeWindow: () => setClosedAt(pathname),
     selectedIcons: selected,
     selectIcons: setSelected,
@@ -95,7 +100,7 @@ export default function Desktop({ children }) {
           ref={areaRef}
           {...handlers}
           onContextMenu={onContextMenu}
-          className="absolute inset-x-0 bottom-0 top-14 select-none md:top-16"
+          className="absolute inset-x-0 bottom-0 top-11 select-none md:top-16"
         >
           <DesktopIcons />
           {children}

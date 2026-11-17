@@ -1,3 +1,4 @@
+import { Agentation } from "agentation";
 import { getSEOTags } from "@/libs/seo";
 import { neuebit, mondwest, pixel } from "./fonts";
 import "./globals.css";
@@ -15,7 +16,12 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${neuebit.variable} ${mondwest.variable} ${pixel.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        {children}
+        {process.env.NODE_ENV === "development" && (
+          <Agentation endpoint="http://localhost:4747" />
+        )}
+      </body>
     </html>
   );
 }

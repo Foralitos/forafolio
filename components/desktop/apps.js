@@ -16,12 +16,12 @@ import {
 // - href interno → abre su ventana dentro del escritorio.
 // - external → sale del sitio en otra pestaña.
 export const APPS = [
-  { id: "home", label: "Home", href: "/", Icon: House, side: "left" },
-  { id: "about", label: "About", href: "/about", Icon: User, side: "left", menu: true },
-  { id: "projects", label: "Projects", href: "/projects", Icon: FolderSimple, side: "left", menu: true },
+  { id: "home", label: "Home", href: "/", Icon: House, side: "left", dock: true },
+  { id: "about", label: "About", href: "/about", Icon: User, side: "left", menu: true, dock: true },
+  { id: "projects", label: "Projects", href: "/projects", Icon: FolderSimple, side: "left", menu: true, dock: true },
   // El blog sigue siendo una página completa fuera del escritorio.
   { id: "blog", label: "Blog", href: "/blog", Icon: Notebook, side: "left", menu: true },
-  { id: "contact", label: "Contact", href: "/contact", Icon: EnvelopeSimple, side: "right", menu: true },
+  { id: "contact", label: "Contact", href: "/contact", Icon: EnvelopeSimple, side: "right", menu: true, dock: true },
   {
     id: "calendar",
     label: "Book a call",

@@ -7,47 +7,55 @@ import { useDesktop } from "./Desktop";
 import { APPS } from "./apps";
 import { CELL_H, CELL_W, MARGIN, moverIconos, useIconLayout } from "./useIconLayout";
 
-// Un ícono del escritorio en el modo "Clear" de macOS Tahoe: squircle de
-// vidrio con el glifo en blanco + etiqueta con sombra. El seleccionado solo
-// ilumina su squircle; la etiqueta no cambia.
-export function DesktopIcon({ app, compact = false }) {
+// Un ícono del escritorio en el modo "Clear" de macOS Tahoe / iOS Liquid Glass:
+// squircle de vidrio con el glifo en blanco + etiqueta con sombra.
+export function DesktopIcon({ app, compact = false, ios = false }) {
   const pathname = usePathname();
   const { windowOpen, openWindow, selectedIcons } = useDesktop();
   // Si hay una selección hecha con el cuadro azul, esa manda; si no, se marca
   // el ícono de la ventana abierta.
   const selected =
     !compact &&
+    !ios &&
     (selectedIcons.size > 0
       ? selectedIcons.has(app.id)
       : windowOpen && app.href === pathname);
 
   const { Icon } = app;
 
+  const boxSize = compact
+    ? "h-[52px] w-[52px] rounded-[14px]"
+    : ios
+      ? "h-[60px] w-[60px] rounded-[16px]"
+      : "h-14 w-14 rounded-[15px]";
+
   const contenido = (
     <>
       <span
-        className={`flex items-center justify-center bg-white/20 backdrop-blur-md backdrop-saturate-150 transition-all duration-200 [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.6),inset_0_0_0_1px_rgba(255,255,255,0.35),0_8px_20px_-6px_rgba(0,0,0,0.35)] group-hover:bg-white/30 group-active:scale-95 ${
-          compact ? "h-11 w-11 rounded-[12px]" : "h-14 w-14 rounded-[15px]"
-        } ${selected ? "bg-white/40" : ""}`}
+        className={`flex items-center justify-center bg-white/20 backdrop-blur-md backdrop-saturate-150 transition-all duration-200 [box-shadow:inset_0_1px_0_0_rgba(255,255,255,0.6),inset_0_0_0_1px_rgba(255,255,255,0.35),0_8px_20px_-6px_rgba(0,0,0,0.35)] group-hover:bg-white/30 group-active:scale-90 ${boxSize} ${
+          selected ? "bg-white/40" : ""
+        }`}
       >
         <Icon
-          size={compact ? 24 : 30}
+          size={compact ? 26 : 30}
           weight="duotone"
           className="text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]"
         />
       </span>
-      {!compact && (
-        <span className="mt-1.5 px-1.5 py-px text-center text-xs font-medium leading-tight text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.8)]">
-          {app.label}
-        </span>
-      )}
+      <span
+        className={`px-1 text-center font-medium leading-tight text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.85)] ${
+          compact ? "mt-1 text-[10px]" : "mt-1.5 py-px text-xs"
+        }`}
+      >
+        {app.label}
+      </span>
     </>
   );
 
-  const comunes = { "data-desktop-icon": compact ? undefined : app.id };
+  const comunes = { "data-desktop-icon": compact || ios ? undefined : app.id };
 
   const clase = `group flex flex-col items-center rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-white/70 ${
-    compact ? "p-1" : "w-24 p-1.5"
+    compact ? "w-16 py-0.5" : ios ? "w-full py-1" : "w-24 p-1.5"
   }`;
 
   if (!app.href) {
@@ -67,7 +75,7 @@ export function DesktopIcon({ app, compact = false }) {
   }
 
   return (
-    <Link href={app.href} onClick={openWindow} aria-label={app.label} draggable={false} {...comunes} className={clase}>
+    <Link href={app.href} onClick={() => openWindow(app.href)} aria-label={app.label} draggable={false} {...comunes} className={clase}>
       {contenido}
     </Link>
   );
@@ -129,32 +137,47 @@ export function DesktopIcons() {
   };
 
   return (
-    <div className="hidden md:block">
-      {APPS.filter((app) => app.side).map((app) => {
-        const celda = layout[app.id];
-        const moviendo = arrastre?.ids.includes(app.id);
-        const lado = celda.anchor === "left" ? { left: MARGIN + celda.col * CELL_W } : { right: MARGIN + celda.col * CELL_W };
-        return (
-          <div
-            key={app.id}
-            onPointerDown={(e) => onPointerDown(e, app.id)}
-            onPointerMove={onPointerMove}
-            onPointerUp={onPointerUp}
-            onPointerCancel={onPointerUp}
-            onClickCapture={onClickCapture}
-            onDragStart={(e) => e.preventDefault()}
-            className={`absolute flex justify-center ${moviendo ? "z-[25] opacity-[0.85]" : "z-10 transition-[left,right,top] duration-300 ease-out"}`}
-            style={{
-              ...lado,
-              top: celda.row * CELL_H,
-              width: CELL_W,
-              transform: moviendo ? `translate(${arrastre.dx}px, ${arrastre.dy}px)` : undefined,
-            }}
-          >
-            <DesktopIcon app={app} />
-          </div>
-        );
-      })}
-    </div>
+    <>
+      {/* Home Screen de iPhone (solo mobile): cuadrícula de 4 columnas con las apps fuera del Dock */}
+      <div className="grid grid-cols-4 gap-x-3 gap-y-5 px-5 pt-5 md:hidden">
+        {APPS.filter((app) => !app.dock).map((app) => (
+          <DesktopIcon key={app.id} app={app} ios />
+        ))}
+      </div>
+
+      {/* Escritorio de macOS (solo desktop): íconos arrastrables a los lados */}
+      <div className="hidden md:block">
+        {APPS.filter((app) => app.side).map((app) => {
+          const celda = layout[app.id];
+          const moviendo = arrastre?.ids.includes(app.id);
+          const lado =
+            celda.anchor === "left"
+              ? { left: MARGIN + celda.col * CELL_W }
+              : { right: MARGIN + celda.col * CELL_W };
+          return (
+            <div
+              key={app.id}
+              onPointerDown={(e) => onPointerDown(e, app.id)}
+              onPointerMove={onPointerMove}
+              onPointerUp={onPointerUp}
+              onPointerCancel={onPointerUp}
+              onClickCapture={onClickCapture}
+              onDragStart={(e) => e.preventDefault()}
+              className={`absolute flex justify-center ${
+                moviendo ? "z-[25] opacity-[0.85]" : "z-10 transition-[left,right,top] duration-300 ease-out"
+              }`}
+              style={{
+                ...lado,
+                top: celda.row * CELL_H,
+                width: CELL_W,
+                transform: moviendo ? `translate(${arrastre.dx}px, ${arrastre.dy}px)` : undefined,
+              }}
+            >
+              <DesktopIcon app={app} />
+            </div>
+          );
+        })}
+      </div>
+    </>
   );
 }
