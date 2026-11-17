@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const usd = (n) => "$" + n.toLocaleString("en-US");
+const mxn = (n) => "$" + n.toLocaleString("es-MX");
 
 // Página de apoyo para TrepCamp Madrid. El botón crea una sesión de Stripe
 // Checkout por el monto elegido (app/api/apoyo/checkout) y redirige ahí; el
@@ -52,7 +52,7 @@ export default function Campaign({ campaign, raised, backers, days, thanks }) {
 
   async function support() {
     if (pick < minAmount || pick > maxAmount) {
-      showToast(`Elige un monto entre ${usd(minAmount)} y ${usd(maxAmount)} USD.`);
+      showToast(`Elige un monto entre ${mxn(minAmount)} y ${mxn(maxAmount)} MXN.`);
       return;
     }
     setLoading(true);
@@ -108,10 +108,10 @@ export default function Campaign({ campaign, raised, backers, days, thanks }) {
 
           <div className="grid gap-1.5">
             <div className="text-[clamp(32px,3.4vw,42px)] font-bold leading-none tracking-[-0.02em] tabular-nums">
-              {usd(raised)}
+              {mxn(raised)}
             </div>
             <div className="text-sm text-[#6e6e73]">
-              recaudados de <b className="font-semibold text-[#1d1d1f]">{usd(goal)} USD</b>
+              recaudados de <b className="font-semibold text-[#1d1d1f]">{mxn(goal)} MXN</b>
             </div>
           </div>
 
@@ -134,8 +134,8 @@ export default function Campaign({ campaign, raised, backers, days, thanks }) {
             </div>
             <div className="mt-1.5 flex justify-between text-[11px] tabular-nums text-[#6e6e73]">
               <span>$0</span>
-              <span>{usd(goal / 2)}</span>
-              <span>{usd(goal)}</span>
+              <span>{mxn(goal / 2)}</span>
+              <span>{mxn(goal)}</span>
             </div>
           </div>
 
@@ -159,7 +159,7 @@ export default function Campaign({ campaign, raised, backers, days, thanks }) {
                       : "border-black/[0.12] bg-[#f5f7fa]"
                   }`}
                 >
-                  {usd(v)}
+                  {mxn(v)}
                 </button>
               );
             })}
@@ -169,7 +169,7 @@ export default function Campaign({ campaign, raised, backers, days, thanks }) {
             htmlFor="custom-amount"
             className="flex items-center gap-2 rounded-[10px] border border-black/[0.12] bg-[#f5f7fa] px-3 focus-within:border-[#007aff]"
           >
-            <span className="font-semibold text-[#6e6e73]">USD</span>
+            <span className="font-semibold text-[#6e6e73]">MXN</span>
             <input
               id="custom-amount"
               type="number"
@@ -189,7 +189,7 @@ export default function Campaign({ campaign, raised, backers, days, thanks }) {
             disabled={loading || closed}
             className="rounded-[10px] bg-[#007aff] p-4 disabled:cursor-not-allowed disabled:opacity-60 text-base font-semibold text-white shadow-[0_4px_0_#00438c] transition-[transform,box-shadow] duration-75 active:translate-y-[3px] active:shadow-[0_1px_0_#00438c] focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-offset-2 focus-visible:outline-[#007aff]"
           >
-            {closed ? "La campaña cerró" : loading ? "Abriendo pago…" : `Apoyar con ${usd(pick)}`}
+            {closed ? "La campaña cerró" : loading ? "Abriendo pago…" : `Apoyar con ${mxn(pick)}`}
           </button>
 
           <p className="text-xs leading-snug text-[#6e6e73]">
@@ -295,7 +295,7 @@ function ThanksModal({ amount, onClose, onCopied }) {
         <p className="mt-3 text-[15.5px] leading-relaxed text-[#6e6e73]">
           {amount ? (
             <>
-              Tus <b className="font-semibold text-[#1d1d1f]">{usd(amount)} USD</b> ya están en la
+              Tus <b className="font-semibold text-[#1d1d1f]">{mxn(amount)} MXN</b> ya están en la
               barra, pero lo que más me llevo es saber que crees en mí.{" "}
             </>
           ) : (

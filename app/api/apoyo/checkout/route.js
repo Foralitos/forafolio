@@ -16,7 +16,7 @@ export async function POST(req) {
   amount = Number(amount);
   if (!Number.isInteger(amount) || amount < CAMPAIGN.minAmount || amount > CAMPAIGN.maxAmount) {
     return NextResponse.json(
-      { error: `El monto debe ser un número entero entre $${CAMPAIGN.minAmount} y $${CAMPAIGN.maxAmount} USD.` },
+      { error: `El monto debe ser un número entero entre $${CAMPAIGN.minAmount} y $${CAMPAIGN.maxAmount} MXN.` },
       { status: 400 }
     );
   }
@@ -34,7 +34,8 @@ export async function POST(req) {
         {
           quantity: 1,
           price_data: {
-            currency: "usd",
+            // Pesos: las tarjetas mexicanas rechazan cobros en dólares.
+            currency: "mxn",
             unit_amount: amount * 100,
             product_data: {
               name: "Apoyo para TrepCamp Madrid",

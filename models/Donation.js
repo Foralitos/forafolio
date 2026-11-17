@@ -29,7 +29,7 @@ export async function recordDonation(data) {
   );
 }
 
-// Total recaudado (en dólares) y número de aportes de una campaña. Solo
+// Total recaudado (en pesos) y número de aportes de una campaña. Solo
 // cuentan los aportes del mismo modo que la llave activa: en local (sk_test)
 // suman los de prueba y en producción (sk_live) solo los reales, aunque los
 // dos vivan en la misma base.

@@ -3,14 +3,14 @@
 // por fuera (transferencias, efectivo) y se actualiza a mano.
 export const CAMPAIGN = {
   id: "trepcamp-madrid-2027",
-  goal: 3000, // USD
+  goal: 60000, // MXN
   offline: { raised: 0, backers: 0 },
   // Fin del 15 de diciembre de 2026 en hora de Chihuahua/CDMX (UTC-6).
   deadline: "2026-12-16T06:00:00Z",
-  amounts: [10, 25, 50, 100],
-  defaultAmount: 25,
-  minAmount: 1,
-  maxAmount: 5000,
+  amounts: [100, 250, 500, 1000],
+  defaultAmount: 250,
+  minAmount: 20,
+  maxAmount: 100000,
   // Video vertical (9:16) en Cloudinary, comprimido a 720x1280. El póster es
   // un frame del mismo video que Cloudinary genera al cambiar la extensión.
   // Si videoUrl es null se muestra el póster de "Video próximamente".
