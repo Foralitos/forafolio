@@ -14,9 +14,9 @@ export const CAMPAIGN = {
   // Video vertical (9:16) en Cloudinary, comprimido a 720x1280. El póster es
   // un frame del mismo video que Cloudinary genera al cambiar la extensión.
   // Si videoUrl es null se muestra el póster de "Video próximamente".
-  videoUrl: "https://res.cloudinary.com/dcixxtcaj/video/upload/v1794232215/forafolio/apoyo-trepcamp.mp4",
+  videoUrl: "https://res.cloudinary.com/dcixxtcaj/video/upload/v1795661576/forafolio/apoyo-layub.mp4",
   videoPoster:
-    "https://res.cloudinary.com/dcixxtcaj/video/upload/so_1,w_720/v1794232215/forafolio/apoyo-trepcamp.jpg",
+    "https://res.cloudinary.com/dcixxtcaj/video/upload/so_1,w_720/v1795661576/forafolio/apoyo-layub.jpg",
   // A qué se destina lo que se junte, sin montos.
   uses: [
     "El vuelo a Madrid",
